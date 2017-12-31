@@ -35,3 +35,13 @@ services:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:39092
+
+  telegraf:
+    image: telegraf:1.5
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    links:
+      - kafka-1
+      - kafka-2
+      - kafka-3
