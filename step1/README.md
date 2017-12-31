@@ -1,7 +1,7 @@
 # Objective
 
 1. Run a zookeeper and single kafka broker
-1. discover how `confluentinc/cp-kafka`
+1. discover how `confluentinc/cp-kafka` is built and run
 
 # `docker-compose`
 
@@ -13,23 +13,17 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper
     hostname: zookeeper
-    ports:
-      - "2181:2181"
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
 
-  broker:
+  kafka:
     image: confluentinc/cp-kafka
-    hostname: broker
+    hostname: kafka
     depends_on:
       - zookeeper
-    ports:
-      - "9092:9092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1      
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092      
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1          
 ```
 
 You can discover the configuration options at
@@ -43,10 +37,11 @@ then run it
 
 ```sh
 $ docker-compose up -d
-$ docker ps
-CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS              PORTS                                        NAMES
-3b26ac46e20d        confluentinc/cp-kafka       "/etc/confluent/do..."   35 seconds ago      Up 34 seconds       0.0.0.0:9092->9092/tcp                       step1_broker_1
-6b2755604ff3        confluentinc/cp-zookeeper   "/etc/confluent/do..."   36 seconds ago      Up 35 seconds       2888/tcp, 0.0.0.0:2181->2181/tcp, 3888/tcp   step1_zookeeper_
+$ docker-compose ps
+      Name                   Command            State                     Ports
+--------------------------------------------------------------------------------------------------
+step1_kafka-1       /etc/confluent/docker/run   Up
+step1_zookeeper_1   /etc/confluent/docker/run   Up      0.0.0.0:2181->2181/tcp, 2888/tcp, 3888/tcp
 ```
 
 Fine, looks like `zookeeper` and `kafka` are up.
@@ -144,7 +139,7 @@ Checkout the [confluent doc](https://docs.confluent.io/current/installation/dock
 # Java 
 
 ```
-$ docker-compose exec broker java -version
+$ docker-compose exec kafka java -version
 openjdk version "1.8.0_102"
 OpenJDK Runtime Environment (Zulu 8.17.0.3-linux64) (build 1.8.0_102-b14)
 OpenJDK 64-Bit Server VM (Zulu 8.17.0.3-linux64) (build 25.102-b14, mixed mode)
@@ -156,14 +151,14 @@ See the [OpenJDK Zulu](https://www.azul.com/downloads/zulu/) based installation 
 
 Let's send a message
 ```sh
-$ docker-compose exec broker bash -c "echo story|kafka-console-producer --broker-list localhost:9092 --topic sample"
+$ docker-compose exec kafka bash -c "echo story|kafka-console-producer --broker-list localhost:9092 --topic sample"
 >>%
 ```
 
 And retrieve it
 
 ```sh
-$ docker-compose exec broker kafka-console-consumer --bootstrap-server localhost:9092 --topic sample --from-beginning -max-messages=1
+$ docker-compose exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic sample --from-beginning --max-messages=1
 story
 Processed a total of 1 messages
 ```
@@ -173,7 +168,7 @@ Ok all good
 Let's see the topics
 
 ```sh
-$ docker-compose exec broker kafka-topics  --zookeeper zookeeper:2181 --list
+$ docker-compose exec kafka kafka-topics  --zookeeper zookeeper:2181 --list
 __consumer_offsets
 sample
 ```
@@ -181,7 +176,7 @@ sample
 And focus on `sample`
 
 ```
-$ docker-compose exec broker kafka-topics  --zookeeper zookeeper:2181 --describe --topic sample
+$ docker-compose exec kafka kafka-topics  --zookeeper zookeeper:2181 --describe --topic sample
 Topic:sample	PartitionCount:1	ReplicationFactor:1	Configs:
 	Topic: sample	Partition: 0	Leader: 1	Replicas: 1	Isr: 1
 ```    
@@ -192,21 +187,21 @@ We can stop the containers now
 
 ```
 $ docker-compose stop
-Stopping step1_broker_1    ...
+Stopping step1_kafka_1    ...
 Stopping step1_zookeeper_1 ...
-broker_1     | [2017-12-31 16:33:47,690] INFO Terminating process due to signal SIGTERM (io.confluent.support.metrics.SupportedKafka)
-broker_1     | [2017-12-31 16:33:47,697] INFO [KafkaServer id=1] shutting down (kafka.server.KafkaServer)
-broker_1     | [2017-12-31 16:33:47,698] INFO [KafkaServer id=1] Starting controlled shutdown (kafka.server.KafkaServer)
-broker_1     | [2017-12-31 16:33:47,712] INFO [Controller id=1] Shutting down broker 1 (kafka.controller.KafkaController)
+kafka_1     | [2017-12-31 16:33:47,690] INFO Terminating process due to signal SIGTERM (io.confluent.support.metrics.SupportedKafka)
+kafka_1     | [2017-12-31 16:33:47,697] INFO [KafkaServer id=1] shutting down (kafka.server.KafkaServer)
+kafka_1     | [2017-12-31 16:33:47,698] INFO [KafkaServer id=1] Starting controlled shutdown (kafka.server.KafkaServer)
+kafka_1     | [2017-12-31 16:33:47,712] INFO [Controller id=1] Shutting down broker 1 (kafka.controller.KafkaController)
 ...
 ...
-Stopping step1_broker_1    ... done
-broker_1     | [2017-12-31 16:33:51,001] INFO [KafkaServer id=1] shut down completed (kafka.server.KafkaServer)
-step1_broker_1 exited with code 143
+Stopping step1_kafka_1    ... done
+kafka_1     | [2017-12-31 16:33:51,001] INFO [KafkaServer id=1] shut down completed (kafka.server.KafkaServer)
+step1_kafka_1 exited with code 143
 Stopping step1_zookeeper_1 ... done
 $ docker-compose ps
       Name                   Command             State     Ports
 ----------------------------------------------------------------
-step1_broker_1      /etc/confluent/docker/run   Exit 143
+step1_kafka_1      /etc/confluent/docker/run   Exit 143
 step1_zookeeper_1   /etc/confluent/docker/run   Exit 143
 ```
