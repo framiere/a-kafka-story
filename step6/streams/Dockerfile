@@ -1,0 +1,9 @@
+FROM maven:3.5-jdk-8 as mavenBuild
+COPY pom.xml pom.xml
+COPY src src
+RUN ["mvn"]
+
+FROM confluentinc/cp-base
+COPY --from=mavenBuild ./target/*.jar ./
+ENV BROKER_LIST "kafka-1:19092,kafka-2:29092,kafka-3:39092"
+CMD [ "bash", "-c", "cub kafka-ready -b ${BROKER_LIST} 3 30 && java -jar *.jar ${BROKER_LIST}" ]

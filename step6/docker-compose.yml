@@ -36,13 +36,28 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:39092
 
+  telegraf-topic:
+    image: confluentinc/cp-kafka
+    command: bash -c "cub kafka-ready -z zookeeper:2181 1 30 && kafka-topics --zookeeper zookeeper:2181 --create --topic telegraf --partitions 10 --replication-factor 3"
+    depends_on:
+      - zookeeper
+
   telegraf:
     image: telegraf:1.5
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
-    links:
+    depends_on:
       - kafka-1
       - kafka-2
       - kafka-3
+      - telegraf-topic
+
+  stream:
+    build: streams/
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+      - telegraf

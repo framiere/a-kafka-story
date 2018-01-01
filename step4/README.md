@@ -9,6 +9,7 @@ In this example, we'll add [telegraf](https://github.com/influxdata/telegraf/) t
 ```yml
   telegraf:
     image: telegraf:1.5
+    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
@@ -18,6 +19,8 @@ In this example, we'll add [telegraf](https://github.com/influxdata/telegraf/) t
       - kafka-3
 ```
 
+Note: we specified the `unless-stopped` [restart policy](https://docs.docker.com/compose/compose-file/#restart) as telegraf will fail to start if the cluster is not already ready.
+
 Note: In order for telegraf to gather docker metrics, we provide it the docker socket as a volume mapping.
 
 The `telegraf.conf` is the following
@@ -26,12 +29,12 @@ The `telegraf.conf` is the following
 [agent]
 interval = "5s"
 
+[[inputs.docker]]
+endpoint = "unix:///tmp/docker.sock"
+
 [[outputs.kafka]]
 brokers = ["kafka-1:19092","kafka-2:29092","kafka-3:39092"]
 topic = "telegraf"
-
-[[inputs.docker]]
-endpoint = "unix:///tmp/docker.sock"
 ```
 
 # Let's run it

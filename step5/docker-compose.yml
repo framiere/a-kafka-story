@@ -15,6 +15,8 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:19092
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
 
   kafka-2:
     image: confluentinc/cp-kafka
@@ -25,7 +27,9 @@ services:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:29092
-
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
+      
   kafka-3:
     image: confluentinc/cp-kafka
     hostname: kafka-3
@@ -35,6 +39,14 @@ services:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:39092
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
+
+  telegraf-topic:
+    image: confluentinc/cp-kafka
+    command: bash -c "cub kafka-ready -z zookeeper:2181 1 30 && kafka-topics --zookeeper zookeeper:2181 --create --topic telegraf --partitions 10 --replication-factor 3"
+    depends_on:
+      - zookeeper
 
   telegraf:
     image: telegraf:1.5
@@ -42,7 +54,8 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
-    links:
+    depends_on:
       - kafka-1
       - kafka-2
       - kafka-3
+      - telegraf-topic

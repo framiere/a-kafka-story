@@ -3,3 +3,4 @@
 1. [Step 3 : java consumer, java producer](step3/README.md)
 1. [Step 4 : let's add data with telegraf](step4/README.md)
 1. [Step 5 : Let's setup the telegraf topic](step5/README.md)
+1. [Step 6 : Let's setup our dev environment](step6/README.md)
