@@ -4,3 +4,4 @@
 1. [Step 4 : let's add data with telegraf](step4/)
 1. [Step 5 : Let's setup better defaults](step5/)
 1. [Step 6 : Enter kafka stream](step6/)
+1. [Step 7 : Capture JMX metrics](step7/)
