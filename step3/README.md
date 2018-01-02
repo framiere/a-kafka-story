@@ -7,7 +7,7 @@
 
 We are adding only 
 
-```
+```yml
   producer:
     build: producer/
     depends_on:
