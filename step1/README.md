@@ -31,7 +31,7 @@ You can discover the configuration options at
 * https://docs.confluent.io/current/installation/docker/docs/configuration.html#zookeeper
 * https://docs.confluent.io/current/installation/docker/docs/configuration.html#confluent-kafka-cp-kafka
 
-Note: `KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR` is set to 1 as we have a single broker, as the default value is 3 no consumer would be able to consume.
+Note: `KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR` is set to 1 as we have a single broker (the default is 3)
 
 then run it 
 
