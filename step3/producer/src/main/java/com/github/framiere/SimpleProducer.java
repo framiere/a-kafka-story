@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class SimpleProducer {
     public static void main(String[] args) throws InterruptedException {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "kafka-1:19092,kafka-2:29092,kafka-3:3902");
+        props.put("bootstrap.servers", "kafka-1:9092,kafka-2:9092,kafka-3:3902");
         props.put("acks", "all");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");

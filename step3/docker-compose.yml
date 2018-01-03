@@ -14,7 +14,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:19092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092
 
   kafka-2:
     image: confluentinc/cp-kafka
@@ -24,7 +24,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9092
 
   kafka-3:
     image: confluentinc/cp-kafka
@@ -34,7 +34,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:39092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:9092
 
   producer:
     build: producer/

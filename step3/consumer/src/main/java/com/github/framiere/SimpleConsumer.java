@@ -10,7 +10,7 @@ import java.util.Properties;
 public class SimpleConsumer {
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "kafka-1:19092,kafka-2:29092,kafka-3:3902");
+        props.put("bootstrap.servers", "kafka-1:9092,kafka-2:9092,kafka-3:3902");
         props.put("group.id", "simple-consumer");
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");

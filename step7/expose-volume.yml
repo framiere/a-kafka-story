@@ -1,0 +1,11 @@
+version: '2'
+services:
+  jolokia:
+    image: jolokia/java-jolokia
+    volumes:
+      - /opt/jolokia/
+  using_an_external_file:
+    image: alpine
+    volumes_from: 
+      - jolokia
+    command: sh -c "echo `ls /opt/jolokia` is from an external folder"

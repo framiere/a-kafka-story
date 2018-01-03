@@ -23,7 +23,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:19092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092
 
   kafka-2:
     image: confluentinc/cp-kafka
@@ -33,7 +33,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9092
 
   kafka-3:
     image: confluentinc/cp-kafka
@@ -43,7 +43,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:39092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:9092
 ```
 
 You can discover the configuration options at
@@ -73,14 +73,14 @@ Fine, looks like `zookeeper` and multiple `kafka` are up.
 
 Let's send a message
 ```sh
-$ docker-compose exec kafka-1 bash -c "echo story|kafka-console-producer --broker-list localhost:19092 --topic sample"
+$ docker-compose exec kafka-1 bash -c "echo story|kafka-console-producer --broker-list localhost:9092 --topic sample"
 >>%
 ```
 
 And retrieve it
 
 ```sh
-$ docker-compose exec kafka-1 kafka-console-consumer --bootstrap-server localhost:19092 --topic sample --from-beginning --max-messages=1
+$ docker-compose exec kafka-1 kafka-console-consumer --bootstrap-server localhost:9092 --topic sample --from-beginning --max-messages=1
 story
 Processed a total of 1 messages
 ```

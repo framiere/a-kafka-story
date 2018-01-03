@@ -1,10 +1,18 @@
 version: '2'
 services:
+  jolokia:
+    image: jolokia/java-jolokia
+    volumes:
+      - /opt/jolokia/
+
   zookeeper:
     image: confluentinc/cp-zookeeper
     hostname: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
+      KAFKA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
+    volumes_from: 
+      - jolokia
 
   kafka-1:
     image: confluentinc/cp-kafka
@@ -15,6 +23,11 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
+      KAFKA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
+    volumes_from: 
+      - jolokia
 
   kafka-2:
     image: confluentinc/cp-kafka
@@ -25,7 +38,12 @@ services:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9092
-
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
+      KAFKA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
+    volumes_from: 
+      - jolokia
+      
   kafka-3:
     image: confluentinc/cp-kafka
     hostname: kafka-3
@@ -35,6 +53,26 @@ services:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:9092
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
+      KAFKA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
+    volumes_from: 
+      - jolokia
+
+  consumer-1:
+    image: confluentinc/cp-kafka
+    hostname: consumer-3
+    depends_on:
+      - zookeeper
+    command: kafka-console-consumer --bootstrap-server kafka-1:9092,kafka-2:9092,kafka-3:9092 --topic telegraf --from-beginning
+    environment:
+      KAFKA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
+    volumes_from:
+      - jolokia
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
 
   telegraf-topic:
     image: confluentinc/cp-kafka
@@ -48,16 +86,11 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./telegraf-inputs/:/tmp/telegraf-inputs/:ro
+    command: telegraf --config-directory /tmp/telegraf-inputs
     depends_on:
+      - zookeeper
       - kafka-1
       - kafka-2
       - kafka-3
-      - telegraf-topic
-
-  stream:
-    build: streams/
-    depends_on:
-      - kafka-1
-      - kafka-2
-      - kafka-3
-      - telegraf
+      - consumer-1
