@@ -52,7 +52,7 @@ confluent-4.0.0/bin/confluent stop
 
 Here's the live version
 	
-[![sreencast](https://asciinema.org/a/IBp8TA07QaWOm5q0cp2mA0c2L.png)](https://asciinema.org/a/IBp8TA07QaWOm5q0cp2mA0c2L)
+[![sreencast](https://asciinema.org/a/IBp8TA07QaWOm5q0cp2mA0c2L.png)](https://asciinema.org/a/IBp8TA07QaWOm5q0cp2mA0c2L?autoplay=1)
 
 # Telegraf
 
