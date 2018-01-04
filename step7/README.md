@@ -203,3 +203,9 @@ We can now reference the `jolokia` volume!
 ```
 
 We're done
+
+
+# The full action ?
+
+[![sreencast](https://asciinema.org/a/e6jEBnNWXQAOfvFwSOLBW0K5V.png)](https://asciinema.org/a/e6jEBnNWXQAOfvFwSOLBW0K5V?autoplay=1)
+

@@ -73,7 +73,7 @@ Fine, looks like `zookeeper` and multiple `kafka` are up.
 
 Let's send a message
 ```sh
-$ docker-compose exec kafka-1 bash -c "echo story|kafka-console-producer --broker-list localhost:9092 --topic sample"
+$ docker-compose exec kafka-1 bash -c "echo story | kafka-console-producer --broker-list localhost:9092 --topic sample"
 >>%
 ```
 
@@ -103,3 +103,6 @@ Topic:sample	PartitionCount:1	ReplicationFactor:1	Configs:
 	Topic: sample	Partition: 0	Leader: 1	Replicas: 1	Isr: 1
 ```    
 
+# The full action ?
+
+[![sreencast](https://asciinema.org/a/2ds7ijbkVDBd7Jdshof5Btd4U.png)](https://asciinema.org/a/2ds7ijbkVDBd7Jdshof5Btd4U?autoplay=1)

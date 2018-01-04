@@ -10,7 +10,7 @@ import java.util.Properties;
 public class SimpleConsumer {
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "kafka-1:9092,kafka-2:9092,kafka-3:3902");
+        props.put("bootstrap.servers", "kafka-1:9092,kafka-2:9092,kafka-3:9092");
         props.put("group.id", "simple-consumer");
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");
@@ -18,9 +18,8 @@ public class SimpleConsumer {
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-        String topic = "sample";
-        System.out.println("Subscribing to " + topic);
-        consumer.subscribe(Arrays.asList(topic));
+        System.out.println("Subscribing to `sample` topic");
+        consumer.subscribe(Arrays.asList("sample"));
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {

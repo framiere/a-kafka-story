@@ -35,7 +35,10 @@ We also create the `telegraf` topic with the right number of partitions from the
 Let' run it `docker-compose up` and verify
 
 ```
-$ docker-compose exec kafka-1 kafka-topics  --zookeeper zookeeper:2181 --describe --topic telegraf
+$ docker-compose exec kafka-1 kafka-topics  \
+    --zookeeper zookeeper:2181 \
+    --describe \
+    --topic telegraf
 Topic:telegraf	PartitionCount:10	ReplicationFactor:3	Configs:
 	Topic: telegraf	Partition: 0	Leader: 2	Replicas: 2,1,3	Isr: 2,1,3
 	Topic: telegraf	Partition: 1	Leader: 3	Replicas: 3,2,1	Isr: 3,2,1
@@ -51,4 +54,6 @@ Topic:telegraf	PartitionCount:10	ReplicationFactor:3	Configs:
 
 All good!
 
+# The full action ?
 
+[![sreencast](https://asciinema.org/a/RLEDOaMNKJs0SoUPuo5GPHab9.png)](https://asciinema.org/a/RLEDOaMNKJs0SoUPuo5GPHab9?autoplay=1)

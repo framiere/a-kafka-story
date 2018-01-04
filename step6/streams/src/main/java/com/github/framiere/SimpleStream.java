@@ -18,9 +18,9 @@ import java.util.concurrent.TimeUnit;
  * ./confluent destroy
  * ./confluent start
  * ./kafka-topics --zookeeper localhost:2181 --create --topic telegraf --partitions 3 --replication-factor 1
- * run application
+ * run application java -jar simplestream*.jar
  * seq 10000 | ./kafka-console-producer --broker-list localhost:9092 --topic telegraf
- * or type youself words : ./kafka-console-producer --broker-list localhost:9092 --topic telegraf
+ * or type yourself words : ./kafka-console-producer --broker-list localhost:9092 --topic telegraf
  * ./kafka-topics --zookeeper localhost:2181 --list
  * ./kafka-console-consumer --bootstrap-server localhost:9092 --topic telegraf-input-by-thread --from-beginning
  * ./kafka-console-consumer --bootstrap-server localhost:9092 --topic telegraf-10s-window-count --property print.key=true --value-deserializer org.apache.kafka.common.serialization.LongDeserializer --from-beginning

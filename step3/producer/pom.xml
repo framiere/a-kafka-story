@@ -35,7 +35,7 @@
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.github.framiere.SimpleStream</mainClass>
+                                    <mainClass>com.github.framiere.SimpleProducer</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>

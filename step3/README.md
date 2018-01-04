@@ -65,7 +65,7 @@ The producer is an almost identical copy of https://kafka.apache.org/10/javadoc/
 You can then run it by `docker-compose up`
 
 ```
-$ docker-compose up
+$ docker-compose up -d
 $ docker-compose ps
       Name                   Command            State               Ports
 -------------------------------------------------------------------------------------
@@ -107,3 +107,6 @@ consumer_1   | Received offset = 370732, key = key 4, value = Value 4
 consumer_1   | Received offset = 370733, key = key 5, value = Value 5
 ```
 
+# The full action ?
+
+[![sreencast](https://asciinema.org/a/lvQz6XFnSHDzoPS2E9wcTiREN.png)](https://asciinema.org/a/lvQz6XFnSHDzoPS2E9wcTiREN?autoplay=1)

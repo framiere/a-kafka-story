@@ -1,7 +1,7 @@
 FROM maven:3.5-jdk-8 as mavenBuild
 COPY pom.xml pom.xml
 COPY src src
-RUN ["mvn"]
+RUN ["mvn", "install"]
 
 FROM confluentinc/cp-base
 COPY --from=mavenBuild ./target/*.jar ./
