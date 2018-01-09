@@ -3,10 +3,7 @@ package com.github.framiere;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
-import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.Produced;
-import org.apache.kafka.streams.kstream.Serialized;
-import org.apache.kafka.streams.kstream.TimeWindows;
+import org.apache.kafka.streams.kstream.*;
 import org.apache.kafka.streams.processor.*;
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public class SimpleStream {
         properties.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 5 * 1000);
         properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         properties.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
-        properties.put(StreamsConfig.TIMESTAMP_EXTRACTOR_CLASS_CONFIG, WallclockTimestampExtractor.class);
+        properties.put(StreamsConfig.DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG, WallclockTimestampExtractor.class);
 
         StreamsBuilder builder = new StreamsBuilder();
         KStream<String, String> input = builder.stream("telegraf", Consumed.with(Serdes.String(), Serdes.String()));
