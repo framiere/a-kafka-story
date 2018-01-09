@@ -94,3 +94,24 @@ services:
       - kafka-2
       - kafka-3
       - consumer-1
+  stream:
+    image: step6_streams
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+      - telegraf
+
+  producer:
+    image: step4_producer
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+
+  consumer:
+    image: step4_consumer
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
