@@ -59,21 +59,6 @@ services:
     volumes_from: 
       - jolokia
 
-  consumer-1:
-    image: confluentinc/cp-kafka
-    hostname: consumer-3
-    depends_on:
-      - zookeeper
-    command: kafka-console-consumer --bootstrap-server kafka-1:9092,kafka-2:9092,kafka-3:9092 --topic telegraf --from-beginning
-    environment:
-      KAFKA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
-    volumes_from:
-      - jolokia
-    depends_on:
-      - kafka-1
-      - kafka-2
-      - kafka-3
-
   telegraf-topic:
     image: confluentinc/cp-kafka
     command: bash -c "cub kafka-ready -z zookeeper:2181 1 30 && kafka-topics --zookeeper zookeeper:2181 --create --topic telegraf --partitions 10 --replication-factor 3"
@@ -93,25 +78,37 @@ services:
       - kafka-1
       - kafka-2
       - kafka-3
-      - consumer-1
-  stream:
-    image: step6_streams
-    depends_on:
-      - kafka-1
-      - kafka-2
-      - kafka-3
-      - telegraf
 
   producer:
-    image: step4_producer
+    build: ../step3/producer
+    environment:
+      JAVA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
+    volumes_from:
+      - jolokia
     depends_on:
       - kafka-1
       - kafka-2
       - kafka-3
 
   consumer:
-    image: step4_consumer
+    build: ../step3/consumer
+    environment:
+      JAVA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
+    volumes_from:
+      - jolokia
     depends_on:
       - kafka-1
       - kafka-2
       - kafka-3
+
+  streams:
+    build: ../step6/streams
+    environment:
+      JAVA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
+    volumes_from:
+      - jolokia
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+      - telegraf

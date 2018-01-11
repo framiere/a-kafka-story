@@ -5,4 +5,5 @@ RUN ["mvn", "install"]
 
 FROM java:8
 COPY --from=mavenBuild ./target/*.jar ./
-CMD [ "bash", "-c", "java -jar *.jar"]
+ENV JAVA_OPTS ""
+CMD [ "bash", "-c", "java ${JAVA_OPTS} -jar *.jar"]
