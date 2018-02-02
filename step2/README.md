@@ -105,4 +105,4 @@ Topic:sample	PartitionCount:1	ReplicationFactor:1	Configs:
 
 # The full action ?
 
-[![sreencast](https://asciinema.org/a/2ds7ijbkVDBd7Jdshof5Btd4U.png)](https://asciinema.org/a/2ds7ijbkVDBd7Jdshof5Btd4U?autoplay=1)
+[![screencast](https://asciinema.org/a/2ds7ijbkVDBd7Jdshof5Btd4U.png)](https://asciinema.org/a/2ds7ijbkVDBd7Jdshof5Btd4U?autoplay=1)

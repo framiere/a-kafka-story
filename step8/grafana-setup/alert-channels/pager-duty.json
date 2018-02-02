@@ -1,0 +1,9 @@
+{
+    "name": "pagerduty",
+    "type": "pagerduty",
+    "settings": {
+      "integrationKey": "YOUR_INTEGRATION_KEY",
+      "uploadImage": true
+    }
+  }
+  

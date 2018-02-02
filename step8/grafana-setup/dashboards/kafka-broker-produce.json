@@ -1,0 +1,450 @@
+{
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "hideControls": false,
+    "id": null,
+    "links": [
+      {
+        "icon": "external link",
+        "tags": [
+          "kafka"
+        ],
+        "type": "dashboards"
+      }
+    ],
+    "refresh": "10s",
+    "rows": [
+      {
+        "collapse": false,
+        "height": 250,
+        "panels": [
+          {
+            "bgimage": "http://oi64.tinypic.com/w1b2mr.jpg",
+            "datasource": "influxdb",
+            "height": "700px",
+            "id": 2,
+            "interval": "10s",
+            "links": [],
+            "sensors": [
+              {
+                "bgcolor": "rgba(0, 0, 0, 0.58)",
+                "bordercolor": "rgb(251, 4, 4)",
+                "color": "#FFFFFF",
+                "format": "%.0f",
+                "name": "RequestQueueSize",
+                "size": 22,
+                "sizeStr": "22px",
+                "valueFormatted": "0",
+                "visible": true,
+                "xlocation": 417,
+                "xlocationStr": "417px",
+                "ylocation": 106,
+                "ylocationStr": "106px"
+              },
+              {
+                "bgcolor": "rgba(0, 0, 0, 0.58)",
+                "bordercolor": "rgb(251, 4, 4)",
+                "color": "#FFFFFF",
+                "format": "%.0f",
+                "name": "ResponseQueueSize",
+                "size": 22,
+                "sizeStr": "22px",
+                "valueFormatted": "0",
+                "visible": true,
+                "xlocation": 201,
+                "xlocationStr": "201px",
+                "ylocation": 495,
+                "ylocationStr": "495px"
+              },
+              {
+                "bgcolor": "rgba(0, 0, 0, 0.58)",
+                "bordercolor": "rgb(251, 4, 4)",
+                "color": "#FFFFFF",
+                "format": "%.0f",
+                "name": "PurgatorySize",
+                "size": 22,
+                "sizeStr": "22px",
+                "valueFormatted": "0",
+                "visible": true,
+                "xlocation": 378,
+                "xlocationStr": "378px",
+                "ylocation": 393,
+                "ylocationStr": "393px"
+              }
+            ],
+            "series": [],
+            "seriesList": [],
+            "span": 6,
+            "targets": [
+              {
+                "alias": "RequestQueueSize",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "previous"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "hide": false,
+                "measurement": "kafka_network_request_channel_per_processor",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"RequestQueueSize\") FROM \"kafka_network_request_channel_per_processor\" WHERE $timeFilter GROUP BY time(10s) fill(previous)",
+                "rawQuery": false,
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "RequestQueueSize"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "median"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "host",
+                    "operator": "=",
+                    "value": "08dc2877f077"
+                  }
+                ]
+              },
+              {
+                "alias": "ResponseQueueSize",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "previous"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_channel_per_processor",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT sum(last(\"ResponseQueueSize\")) FROM \"kafka_network_request_channel_per_processor\" WHERE $timeFilter GROUP BY time($__interval) fill(previous)",
+                "rawQuery": false,
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "ResponseQueueSize"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "sum"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "ResponseQueueSize"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              },
+              {
+                "alias": "PurgatorySize",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "previous"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_delayed_operation_purgatory",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT mean(\"PurgatorySize\") FROM \"kafka_server_delayed_operation_purgatory\" WHERE (\"delayedOperation\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(previous)",
+                "rawQuery": false,
+                "refId": "C",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "PurgatorySize"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "delayedOperation",
+                    "operator": "=",
+                    "value": "Produce"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              }
+            ],
+            "title": "Request",
+            "type": "bessler-pictureit-panel",
+            "valueMaps": [],
+            "width": "100px"
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "fill": 1,
+            "height": "600",
+            "id": 4,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 6,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "$tag_name",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "name"
+                    ],
+                    "type": "tag"
+                  },
+                  {
+                    "params": [
+                      "null"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_controller_controller_stats",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Count"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "mean"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Controller",
+            "tooltip": {
+              "shared": true,
+              "sort": 2,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      }
+    ],
+    "schemaVersion": 14,
+    "style": "dark",
+    "tags": [
+      "kafka"
+    ],
+    "templating": {
+      "list": [
+        {
+          "allValue": null,
+          "current": {
+            "text": "08dc2877f077",
+            "value": "08dc2877f077"
+          },
+          "datasource": "influxdb",
+          "hide": 0,
+          "includeAll": false,
+          "label": null,
+          "multi": false,
+          "name": "host",
+          "options": [
+            {
+              "selected": true,
+              "text": "08dc2877f077",
+              "value": "08dc2877f077"
+            }
+          ],
+          "query": "show tag values from kafka_server_broker_topic_metrics_per_topic with key = host",
+          "refresh": 0,
+          "regex": "",
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-5m",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ]
+    },
+    "timezone": "",
+    "title": "Kafka Broker Produce",
+    "version": 2
+  }
+}

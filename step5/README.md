@@ -56,4 +56,4 @@ All good!
 
 # The full action ?
 
-[![sreencast](https://asciinema.org/a/RLEDOaMNKJs0SoUPuo5GPHab9.png)](https://asciinema.org/a/RLEDOaMNKJs0SoUPuo5GPHab9?autoplay=1)
+[![screencast](https://asciinema.org/a/RLEDOaMNKJs0SoUPuo5GPHab9.png)](https://asciinema.org/a/RLEDOaMNKJs0SoUPuo5GPHab9?autoplay=1)

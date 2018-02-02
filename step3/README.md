@@ -109,4 +109,4 @@ consumer_1   | Received offset = 370733, key = key 5, value = Value 5
 
 # The full action ?
 
-[![sreencast](https://asciinema.org/a/lvQz6XFnSHDzoPS2E9wcTiREN.png)](https://asciinema.org/a/lvQz6XFnSHDzoPS2E9wcTiREN?autoplay=1)
+[![screencast](https://asciinema.org/a/lvQz6XFnSHDzoPS2E9wcTiREN.png)](https://asciinema.org/a/lvQz6XFnSHDzoPS2E9wcTiREN?autoplay=1)

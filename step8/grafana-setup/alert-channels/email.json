@@ -1,0 +1,10 @@
+{
+    "name": "email",
+    "type": "email",
+    "isDefault": true,
+    "settings": {
+      "addresses": "team@email.com",
+      "uploadImage": true
+    }
+  }
+  

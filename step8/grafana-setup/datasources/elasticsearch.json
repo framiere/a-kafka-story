@@ -1,0 +1,11 @@
+{
+    "name": "elasticsearch",
+    "type": "elasticsearch",
+    "url": "http://elasticsearch:9200",
+    "access": "proxy",
+    "jsonData": {
+      "timeField": "@timestamp"
+    },
+    "database": "logstash-*"
+  }
+  

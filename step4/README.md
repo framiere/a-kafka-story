@@ -85,4 +85,4 @@ Do not forget to read the [scaling-the-cluster](https://docs.confluent.io/curren
 
 # The full action ?
 
-[![sreencast](https://asciinema.org/a/WY9PphR9uHspuaStk8mLFhaZC.png)](https://asciinema.org/a/WY9PphR9uHspuaStk8mLFhaZC?autoplay=1)
+[![screencast](https://asciinema.org/a/WY9PphR9uHspuaStk8mLFhaZC.png)](https://asciinema.org/a/WY9PphR9uHspuaStk8mLFhaZC?autoplay=1)

@@ -24,7 +24,6 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092
       KAFKA_DEFAULT_REPLICATION_FACTOR: 3
-      KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
       KAFKA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
     volumes_from: 
       - jolokia
@@ -39,7 +38,6 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9092
       KAFKA_DEFAULT_REPLICATION_FACTOR: 3
-      KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
       KAFKA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
     volumes_from: 
       - jolokia
@@ -54,7 +52,6 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:9092
       KAFKA_DEFAULT_REPLICATION_FACTOR: 3
-      KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
       KAFKA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
     volumes_from: 
       - jolokia
@@ -70,8 +67,8 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
-      - ./telegraf.conf:/tmp/telegraf.conf:ro
-      - ./telegraf-inputs/:/tmp/telegraf-inputs/:ro
+      - ../step7/telegraf.conf:/tmp/telegraf.conf:ro
+      - ../step7/telegraf-inputs/:/tmp/telegraf-inputs/:ro
     command: telegraf -config /tmp/telegraf.conf --config-directory /tmp/telegraf-inputs
     depends_on:
       - zookeeper
@@ -112,3 +109,42 @@ services:
       - kafka-2
       - kafka-3
       - telegraf
+
+  influxdb:
+    image: influxdb:1.4.2
+    ports:
+      - "8086:8086"
+
+  chronograf:
+    image: chronograf:1.4.0
+    environment:
+      INFLUXDB_URL: http://influxdb:8086
+    ports:
+      - "8888:8888"
+    depends_on:
+      - influxdb
+
+  grafana:
+    image: grafana/grafana:4.6.3
+    ports:
+      - "3000:3000"
+    depends_on:
+      - influxdb
+    environment:
+      GF_INSTALL_PLUGINS: jdbranham-diagram-panel,novalabs-annotations-panel,vonage-status-panel,bessler-pictureit-panel,grafana-piechart-panel
+
+  grafana-setup:
+    build: grafana-setup/
+    depends_on:
+      - grafana
+
+  kafka-to-influxdb:
+    image: telegraf:1.5
+    restart: unless-stopped
+    volumes:
+      - ./telegraf-kafka-to-influxdb.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+      - influxdb

@@ -1,0 +1,4192 @@
+{
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "hideControls": false,
+    "id": null,
+    "links": [
+      {
+        "icon": "external link",
+        "tags": [
+          "kafka"
+        ],
+        "type": "dashboards"
+      }
+    ],
+    "refresh": "10s",
+    "rows": [
+      {
+        "collapse": false,
+        "height": 154,
+        "panels": [
+          {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": true,
+            "colors": [
+              "#299c46",
+              "rgba(237, 129, 40, 0.89)",
+              "#d44a3a"
+            ],
+            "datasource": "influxdb",
+            "description": "Number of under-replicated partitions (| ISR | < | all replicas |). Alert if value is greater than 0.",
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "id": 13,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "span": 3,
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": true
+            },
+            "tableColumn": "",
+            "targets": [
+              {
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "null"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_replica_manager",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "UnderReplicatedPartitions"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": []
+              }
+            ],
+            "thresholds": "1,10",
+            "title": "Under replicated partitions",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+              {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+              }
+            ],
+            "valueName": "avg"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": true,
+            "colors": [
+              "#299c46",
+              "#e24d42",
+              "#d44a3a"
+            ],
+            "datasource": "influxdb",
+            "description": "Number of partitions that don’t have an active leader and are hence not writable or readable. Alert if value is greater than 0.",
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "id": 1,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "span": 3,
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": true
+            },
+            "tableColumn": "",
+            "targets": [
+              {
+                "alias": "Offline Partitions",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "null"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_controller_kafka_controller",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OfflinePartitionsCount"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": []
+              }
+            ],
+            "thresholds": "1",
+            "title": "Offline Partitions",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+              {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+              }
+            ],
+            "valueName": "avg"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": true,
+            "colors": [
+              "#e24d42",
+              "#508642",
+              "#d44a3a"
+            ],
+            "datasource": "influxdb",
+            "description": "Number of active controllers in the cluster. Alert if the aggregated sum across all brokers in the cluster is anything other than 1 because there should be exactly one controller per cluster.",
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "id": 2,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "span": 3,
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": true
+            },
+            "tableColumn": "",
+            "targets": [
+              {
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "previous"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_controller_kafka_controller",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "ActiveControllerCount"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "max"
+                    }
+                  ]
+                ],
+                "tags": []
+              }
+            ],
+            "thresholds": "1",
+            "title": "Active controller",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+              {
+                "op": "=",
+                "text": "N/A",
+                "value": "null"
+              }
+            ],
+            "valueName": "max"
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Number of partitions on this broker. This should be mostly even across all brokers.",
+            "fill": 1,
+            "id": 24,
+            "legend": {
+              "alignAsTable": false,
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 3,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Partition count ($tag_jolokia_agent_url)",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "jolokia_agent_url"
+                    ],
+                    "type": "tag"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_replica_manager",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "PartitionCount"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "mean"
+                    }
+                  ]
+                ],
+                "tags": []
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Partition count / host",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": 250,
+        "panels": [
+          {
+            "aliasColors": {},
+            "cacheTimeout": null,
+            "combine": {
+              "label": "Others",
+              "threshold": 0
+            },
+            "datasource": "influxdb",
+            "fontSize": "80%",
+            "format": "short",
+            "id": 25,
+            "interval": null,
+            "legend": {
+              "percentage": true,
+              "show": true,
+              "values": true
+            },
+            "legendType": "Under graph",
+            "links": [],
+            "maxDataPoints": 3,
+            "nullPointMode": "connected",
+            "pieType": "donut",
+            "span": 3,
+            "strokeWidth": 1,
+            "targets": [
+              {
+                "alias": "$tag_jolokia_agent_url",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "jolokia_agent_url"
+                    ],
+                    "type": "tag"
+                  },
+                  {
+                    "params": [
+                      "null"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_replica_manager",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "PartitionCount"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "mean"
+                    }
+                  ]
+                ],
+                "tags": []
+              }
+            ],
+            "title": "Partition count",
+            "type": "grafana-piechart-panel",
+            "valueName": "current"
+          },
+          {
+            "aliasColors": {},
+            "cacheTimeout": null,
+            "combine": {
+              "label": "Others",
+              "threshold": 0
+            },
+            "datasource": "influxdb",
+            "fontSize": "80%",
+            "format": "short",
+            "id": 26,
+            "interval": null,
+            "legend": {
+              "percentage": true,
+              "show": true,
+              "values": true
+            },
+            "legendType": "Under graph",
+            "links": [],
+            "maxDataPoints": 3,
+            "nullPointMode": "connected",
+            "pieType": "donut",
+            "span": 3,
+            "strokeWidth": 1,
+            "targets": [
+              {
+                "alias": "$tag_jolokia_agent_url",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "jolokia_agent_url"
+                    ],
+                    "type": "tag"
+                  },
+                  {
+                    "params": [
+                      "null"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_replica_manager",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "LeaderCount"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "mean"
+                    }
+                  ]
+                ],
+                "tags": []
+              }
+            ],
+            "title": "Leader count",
+            "type": "grafana-piechart-panel",
+            "valueName": "current"
+          },
+          {
+            "aliasColors": {},
+            "cacheTimeout": null,
+            "combine": {
+              "label": "Others",
+              "threshold": 0
+            },
+            "datasource": "influxdb",
+            "fontSize": "80%",
+            "format": "decbytes",
+            "id": 27,
+            "interval": null,
+            "legend": {
+              "percentage": true,
+              "show": true,
+              "values": true
+            },
+            "legendType": "Under graph",
+            "links": [],
+            "maxDataPoints": 3,
+            "nullPointMode": "connected",
+            "pieType": "donut",
+            "span": 3,
+            "strokeWidth": 1,
+            "targets": [
+              {
+                "alias": "$tag_jolokia_agent_url",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "jolokia_agent_url"
+                    ],
+                    "type": "tag"
+                  },
+                  {
+                    "params": [
+                      "null"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_broker_topic_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "BytesInPerSec"
+                  }
+                ]
+              }
+            ],
+            "title": "Bytes In / sec",
+            "type": "grafana-piechart-panel",
+            "valueName": "current"
+          },
+          {
+            "aliasColors": {},
+            "cacheTimeout": null,
+            "combine": {
+              "label": "Others",
+              "threshold": 0
+            },
+            "datasource": "influxdb",
+            "fontSize": "80%",
+            "format": "decbytes",
+            "id": 28,
+            "interval": null,
+            "legend": {
+              "percentage": true,
+              "percentageDecimals": 1,
+              "show": true,
+              "values": true
+            },
+            "legendType": "Under graph",
+            "links": [],
+            "maxDataPoints": 3,
+            "nullPointMode": "connected",
+            "pieType": "donut",
+            "span": 3,
+            "strokeWidth": 1,
+            "targets": [
+              {
+                "alias": "$tag_jolokia_agent_url",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "jolokia_agent_url"
+                    ],
+                    "type": "tag"
+                  },
+                  {
+                    "params": [
+                      "null"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_broker_topic_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "mean"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "BytesOutPerSec"
+                  }
+                ]
+              }
+            ],
+            "title": "Bytes Out / sec",
+            "type": "grafana-piechart-panel",
+            "valueName": "current"
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": 250,
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Aggregate incoming / outgoing byte rate.",
+            "fill": 1,
+            "id": 4,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Bytes In / sec",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_broker_topic_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "mean"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "BytesInPerSec"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              },
+              {
+                "alias": "Bytes Out / sec",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_broker_topic_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "mean"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "BytesOutPerSec"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Bytes / sec",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "decimals": 0,
+                "format": "Bps",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Request rate.",
+            "fill": 1,
+            "id": 5,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Produce req Rate",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT percentile(\"MeanRate\", 95) FROM \"kafka_network_request_metrics\" WHERE (\"request\" = 'Produce' AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+                "rawQuery": false,
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "request",
+                    "operator": "=",
+                    "value": "Produce"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              },
+              {
+                "alias": "Fetch Consumer req Rate",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT percentile(\"MeanRate\", 95) FROM \"kafka_network_request_metrics\" WHERE (\"request\" = 'FetchConsumer' AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+                "rawQuery": false,
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchConsumer"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              },
+              {
+                "alias": "Fetch Follower req Rate",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "previous"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT percentile(\"MeanRate\", 95) FROM \"kafka_network_request_metrics\" WHERE (\"request\" = 'FetchFollower' AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+                "rawQuery": false,
+                "refId": "C",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchFollower"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Requests / sec",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "iops",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Aggregate incoming message rate.",
+            "fill": 1,
+            "id": 20,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Messages In /s",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_broker_topic_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "MessagesInPerSec"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Messages In / sec",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "decimals": 0,
+                "format": "ops",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": 250,
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Fetch and Produce requests total time",
+            "fill": 1,
+            "id": 6,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 6,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Produce Requests / sec",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "0"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_broker_topic_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "name",
+                    "operator": "=",
+                    "value": "TotalProduceRequestsPerSec"
+                  }
+                ]
+              },
+              {
+                "alias": "Fetch Requests / sec",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "0"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_broker_topic_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "name",
+                    "operator": "=",
+                    "value": "TotalFetchRequestsPerSec"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Total Fetch and Produce Req / sec",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "iops",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "fill": 1,
+            "id": 7,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 6,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Max failed Produce req / sec",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_broker_topic_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "FailedProduceRequestsPerSec"
+                  }
+                ]
+              },
+              {
+                "alias": "Max failed Fetch req / sec",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_broker_topic_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "FailedFetchRequestsPerSec"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Failed Production and Fetch req / sec",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": 250,
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Leader election count",
+            "fill": 1,
+            "id": 8,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Leader election Rate",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_controller_controller_stats",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Count"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "LeaderElectionRateAndTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              },
+              {
+                "alias": "Unclean Leader election Rate",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_controller_controller_stats",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Count"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "UncleanLeaderElectionsPerSec"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Leader Election",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "decimals": null,
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "fill": 1,
+            "id": 14,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "connected",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "jolokia_agent_url"
+                    ],
+                    "type": "tag"
+                  }
+                ],
+                "measurement": "kafka_controller_controller_stats",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "95thPercentile"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": []
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Leader election latency",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "decimals": 2,
+                "format": "ms",
+                "label": "",
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Maximum lag in messages between the follower and leader replicas",
+            "fill": 1,
+            "id": 10,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Max Replica Lag $tag_host",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "host"
+                    ],
+                    "type": "tag"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_replica_fetcher_manager",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "MaxLag"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "clientId",
+                    "operator": "=",
+                    "value": "Replica"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Replication Lag",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": 250,
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Average fraction of time the request handler threads are idle",
+            "fill": 1,
+            "id": 11,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 6,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Idle % ($tag_host)",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "host"
+                    ],
+                    "type": "tag"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_kafka_request_handler_pool",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "OneMinuteRate"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "RequestHandlerAvgIdlePercent"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Request handler Idle %",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "decimals": 0,
+                "format": "percentunit",
+                "label": "",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Average fraction of time the network processor threads are idle",
+            "fill": 1,
+            "id": 12,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 6,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Network processor avg Idle % ($tag_host)",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "host"
+                    ],
+                    "type": "tag"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_socket_server",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "NetworkProcessorAvgIdlePercent"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "host",
+                    "operator": "=~",
+                    "value": "/^$host$/"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Network processor avg Idle %",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "decimals": 0,
+                "format": "percentunit",
+                "label": "",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": 250,
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Size of the request queue. A congested request queue will not be able to process incoming or outgoing requests",
+            "fill": 1,
+            "id": 15,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Request Queue size",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_channel_per_processor",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "RequestQueueSize"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": []
+              },
+              {
+                "alias": "Response Queue size",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_channel_per_processor",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "ResponseQueueSize"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": []
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Request / Response queue size",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Total time in ms to serve the specified request",
+            "fill": 1,
+            "id": 16,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Produce req total time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "previous"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "request",
+                    "operator": "=",
+                    "value": "Produce"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "name",
+                    "operator": "=",
+                    "value": "TotalTimeMs"
+                  }
+                ]
+              },
+              {
+                "alias": "Consumer fetch req total time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "previous"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchConsumer"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "name",
+                    "operator": "=",
+                    "value": "TotalTimeMs"
+                  }
+                ]
+              },
+              {
+                "alias": "Follower fetch req total time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "previous"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "C",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchFollower"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "name",
+                    "operator": "=",
+                    "value": "TotalTimeMs"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Produce/FetchConsumer/FetchFollower Total time",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "ms",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "fill": 1,
+            "id": 23,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_log_log_flush_stats",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Max"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "mean"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "LogFlushRateAndTimeMs"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Log flush time",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "decimals": null,
+                "format": "ms",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": 248,
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Queue: Time the request waits in the request queue\nLocal: Time the request is processed at the leader\nRemote: Time the request waits for the follower. This is non-zero for produce requests when acks=all\nResponse queue: Time the request waits in the response queue\nResponse send: Time to send the response",
+            "fill": 1,
+            "id": 17,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Request queue time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'RequestQueueTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "RequestQueueTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "Produce"
+                  }
+                ]
+              },
+              {
+                "alias": "Request local time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'LocalTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "LocalTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "Produce"
+                  }
+                ]
+              },
+              {
+                "alias": "Request remote time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'LocalTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "C",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "RemoteTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "Produce"
+                  }
+                ]
+              },
+              {
+                "alias": "Request response queue time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'RemoteTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "D",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "ResponseQueueTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "Produce"
+                  }
+                ]
+              },
+              {
+                "alias": "Request response send time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'RemoteTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "E",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "ResponseSendTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "Produce"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Kafka Produce Requests processing time",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "ms",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Queue: Time the request waits in the request queue\nLocal: Time the request is processed at the leader\nRemote: Time the request waits for the follower. This is non-zero for produce requests when acks=all\nResponse queue: Time the request waits in the response queue\nResponse send: Time to send the response",
+            "fill": 1,
+            "id": 18,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Request queue time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "RequestQueueTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchConsumer"
+                  }
+                ]
+              },
+              {
+                "alias": "Request local time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'LocalTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "LocalTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchConsumer"
+                  }
+                ]
+              },
+              {
+                "alias": "Request remote time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'LocalTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "C",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "RemoteTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchConsumer"
+                  }
+                ]
+              },
+              {
+                "alias": "Request response queue time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'RemoteTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "D",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "ResponseQueueTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchConsumer"
+                  }
+                ]
+              },
+              {
+                "alias": "Request response send time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'RemoteTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "E",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "ResponseSendTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchConsumer"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Kafka Fetch Consumer Requests processing time",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "ms",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "Queue: Time the request waits in the request queue\nLocal: Time the request is processed at the leader\nRemote: Time the request waits for the follower. This is non-zero for produce requests when acks=all\nResponse queue: Time the request waits in the response queue\nResponse send: Time to send the response",
+            "fill": 1,
+            "id": 19,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 4,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Request queue time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "RequestQueueTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchFollower"
+                  }
+                ]
+              },
+              {
+                "alias": "Request local time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'LocalTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "LocalTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchFollower"
+                  }
+                ]
+              },
+              {
+                "alias": "Request remote time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'LocalTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "C",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "RemoteTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchFollower"
+                  }
+                ]
+              },
+              {
+                "alias": "Request response queue time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'RemoteTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "D",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "ResponseQueueTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchFollower"
+                  }
+                ]
+              },
+              {
+                "alias": "Request response send time",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_network_request_metrics",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "query": "SELECT last(\"OneMinuteRate\") FROM \"kafka_network_request_metrics\" WHERE (\"name\" = 'RemoteTimeMs' AND \"request\" = 'Produce') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+                "rawQuery": false,
+                "refId": "E",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "Mean"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "name",
+                    "operator": "=",
+                    "value": "ResponseSendTimeMs"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "request",
+                    "operator": "=",
+                    "value": "FetchFollower"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Kafka Fetch Follower Requests processing time",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "ms",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      },
+      {
+        "collapse": false,
+        "height": 225,
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "description": "IsrShrinksPerSec : If a broker goes down, ISR for some of the partitions will shrink. When that broker is up again, ISR will be expanded once the replicas are fully caught up. Other than that, the expected value for both ISR shrink rate and expansion rate is 0.\n\nIsrExpandsPerSec : When a broker is brought up after a failure, it starts catching up by reading from the leader. Once it is caught up, it gets added back to the ISR.",
+            "fill": 1,
+            "id": 21,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 6,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_replica_manager",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "IsrShrinksPerSec"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": []
+              },
+              {
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_replica_manager",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "IsrExpandsPerSec"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": []
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Isr Shrink / Expand per seconds",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              }
+            ]
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "influxdb",
+            "fill": 1,
+            "id": 22,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 6,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "alias": "Produce",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_delayed_operation_purgatory",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "A",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "PurgatorySize"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "delayedOperation",
+                    "operator": "=",
+                    "value": "Produce"
+                  }
+                ]
+              },
+              {
+                "alias": "Fetch",
+                "dsType": "influxdb",
+                "groupBy": [
+                  {
+                    "params": [
+                      "$__interval"
+                    ],
+                    "type": "time"
+                  },
+                  {
+                    "params": [
+                      "linear"
+                    ],
+                    "type": "fill"
+                  }
+                ],
+                "measurement": "kafka_server_delayed_operation_purgatory",
+                "orderByTime": "ASC",
+                "policy": "default",
+                "refId": "B",
+                "resultFormat": "time_series",
+                "select": [
+                  [
+                    {
+                      "params": [
+                        "PurgatorySize"
+                      ],
+                      "type": "field"
+                    },
+                    {
+                      "params": [],
+                      "type": "last"
+                    }
+                  ]
+                ],
+                "tags": [
+                  {
+                    "key": "delayedOperation",
+                    "operator": "=",
+                    "value": "Fetch"
+                  }
+                ]
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Fetch / Produce purgatory size",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              }
+            ]
+          }
+        ],
+        "repeat": null,
+        "repeatIteration": null,
+        "repeatRowId": null,
+        "showTitle": false,
+        "title": "Dashboard Row",
+        "titleSize": "h6"
+      }
+    ],
+    "schemaVersion": 14,
+    "style": "dark",
+    "tags": [
+      "kafka"
+    ],
+    "templating": {
+      "list": [
+        {
+          "allValue": "",
+          "current": {
+            "text": "ce01933c3cde",
+            "value": [
+              "ce01933c3cde"
+            ]
+          },
+          "datasource": "influxdb",
+          "hide": 0,
+          "includeAll": true,
+          "label": null,
+          "multi": true,
+          "name": "host",
+          "options": [],
+          "query": "show tag values from docker_container_cpu with key = host",
+          "refresh": 1,
+          "regex": "",
+          "sort": 1,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-5m",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ]
+    },
+    "timezone": "",
+    "title": "Kafka Cluster",
+    "version": 4
+  }
+}

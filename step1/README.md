@@ -208,4 +208,4 @@ step1_zookeeper_1   /etc/confluent/docker/run   Exit 143
 
 # The full action ?
 
-[![sreencast](https://asciinema.org/a/gZsALOy3FH2JEYnQJZfnL0p2N.png)](https://asciinema.org/a/gZsALOy3FH2JEYnQJZfnL0p2N?autoplay=1)
+[![screencast](https://asciinema.org/a/gZsALOy3FH2JEYnQJZfnL0p2N.png)](https://asciinema.org/a/gZsALOy3FH2JEYnQJZfnL0p2N?autoplay=1)

@@ -52,7 +52,7 @@ confluent-4.0.0/bin/confluent stop
 
 Here's the live version
 	
-[![sreencast](https://asciinema.org/a/IBp8TA07QaWOm5q0cp2mA0c2L.png)](https://asciinema.org/a/IBp8TA07QaWOm5q0cp2mA0c2L?autoplay=1)
+[![screencast](https://asciinema.org/a/IBp8TA07QaWOm5q0cp2mA0c2L.png)](https://asciinema.org/a/IBp8TA07QaWOm5q0cp2mA0c2L?autoplay=1)
 
 # Telegraf
 
@@ -184,7 +184,7 @@ step7_using_jolokia_1 exited with code 0
 
 We can now reference the `jolokia` volume!
 
-```
+```yml
   consumer-1:
     image: confluentinc/cp-kafka
     hostname: consumer-3
@@ -207,5 +207,5 @@ We're done
 
 # The full action ?
 
-[![sreencast](https://asciinema.org/a/e6jEBnNWXQAOfvFwSOLBW0K5V.png)](https://asciinema.org/a/e6jEBnNWXQAOfvFwSOLBW0K5V?autoplay=1)
+[![screencast](https://asciinema.org/a/e6jEBnNWXQAOfvFwSOLBW0K5V.png)](https://asciinema.org/a/e6jEBnNWXQAOfvFwSOLBW0K5V?autoplay=1)
 
