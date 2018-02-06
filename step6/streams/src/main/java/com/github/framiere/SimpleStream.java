@@ -60,6 +60,17 @@ public class SimpleStream {
                 .toStream((windowedRegion, count) -> windowedRegion.toString())
                 .to("telegraf-10s-window-count", Produced.with(Serdes.String(), Serdes.Long()));
 
+        // you can branch to multiple destinations, please note that the branching happens on first-match:
+        // A record in the original stream is assigned to the corresponding result
+        // stream for the first predicate that evaluates to true, and is assigned to this stream only.
+        // A record will be dropped if none of the predicates evaluate to true.
+        KStream<String, String>[] branch = input.branch(
+                (key, value) -> (value.length() % 3) == 0,
+                (key, value) -> (value.length() % 5) == 0);
+
+        branch[0].to("telegraf-divisible-by-3", Produced.with(Serdes.String(), Serdes.String()));
+        branch[1].to("telegraf-divisible-by-5", Produced.with(Serdes.String(), Serdes.String()));
+
         // You can also use the low level APIs if you need to handle complex use cases,
         input
                 .process(() -> new AbstractProcessor<String, String>() {
@@ -89,6 +100,7 @@ public class SimpleStream {
                         }
                     }
                 });
+
 
         Topology build = builder.build();
 
