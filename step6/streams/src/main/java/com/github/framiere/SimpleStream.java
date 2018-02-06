@@ -66,10 +66,12 @@ public class SimpleStream {
         // A record will be dropped if none of the predicates evaluate to true.
         KStream<String, String>[] branch = input.branch(
                 (key, value) -> (value.length() % 3) == 0,
-                (key, value) -> (value.length() % 5) == 0);
+                (key, value) -> (value.length() % 5) == 0,
+                (key, value) -> true);
 
-        branch[0].to("telegraf-divisible-by-3", Produced.with(Serdes.String(), Serdes.String()));
-        branch[1].to("telegraf-divisible-by-5", Produced.with(Serdes.String(), Serdes.String()));
+        branch[0].to("telegraf-length-divisible-by-3", Produced.with(Serdes.String(), Serdes.String()));
+        branch[1].to("telegraf-length-divisible-by-5", Produced.with(Serdes.String(), Serdes.String()));
+        branch[2].to("telegraf-length-divisible-by-neither-3-nor-5", Produced.with(Serdes.String(), Serdes.String()));
 
         // You can also use the low level APIs if you need to handle complex use cases,
         input
