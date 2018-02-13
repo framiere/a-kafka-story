@@ -1,6 +1,6 @@
 # Objective 
 
-Grafana
+Pushing metrics to Influxdb via Kafka, and graphing them in Grafana
 
 
 # Metrics -> Influxdb
@@ -42,5 +42,13 @@ database = "telegraf"
 
 # Grafana
 
+see https://github.com/framiere/monitoring-demo
 
 
+# Docker-compose
+
+As we are using volumes down, to tear down this step please use
+
+```
+$ docker-compose down --volumes
+```

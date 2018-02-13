@@ -6,3 +6,5 @@
 1. [Step 6 : Enter kafka stream](step6/)
 1. [Step 7 : Capture JMX metrics](step7/)
 1. [Step 8 : Grafana](step8/)
+1. [Step 9 : Kafka Connect](step9/)
+1. [Step 10 : Kafka Connect and Schema Registry](step10/)
