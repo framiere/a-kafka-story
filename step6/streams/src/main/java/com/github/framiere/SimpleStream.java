@@ -81,25 +81,22 @@ public class SimpleStream {
                     @Override
                     public void init(ProcessorContext context) {
                         super.init(context);
+                        // Punctuator function will be called on the same thread
                         context().schedule(TimeUnit.SECONDS.toMillis(10), PunctuationType.WALL_CLOCK_TIME, this::flush);
                     }
 
                     private void flush(long timestamp) {
-                        synchronized (batch) {
-                            if (!batch.isEmpty()) {
-                                // sending to an external system ?
-                                System.out.println(timestamp + " " + Thread.currentThread().getName() + " Flushing batch of " + batch.size());
-                                batch.clear();
-                            }
+                        if (!batch.isEmpty()) {
+                            // sending to an external system ?
+                            System.out.println(timestamp + " " + Thread.currentThread().getName() + " Flushing batch of " + batch.size());
+                            batch.clear();
                         }
                     }
 
                     @Override
                     public void process(String key, String value) {
-                        synchronized (batch) {
-                            batch.add(value);
-                            context().forward(key, value);
-                        }
+                        batch.add(value);
+                        context().forward(key, value);
                     }
                 });
 
