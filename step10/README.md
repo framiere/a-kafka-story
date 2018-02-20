@@ -101,11 +101,8 @@ $ docker-compose exec schema-registry kafka-avro-console-consumer -bootstrap-ser
   	bootstrap.servers = [kafka-1:9092, kafka-2:9092, kafka-3:9092]
 
 ...
-{"id":1,"name":"kafka","team_email":"kafka@team.co","last_modified":1518544661000}
-{"id":2,"name":"kafka","team_email":"kafka@team.co","last_modified":1518544666000}
-{"id":3,"name":"kafka","team_email":"kafka@team.co","last_modified":1518544679000}
-{"id":4,"name":"kafka","team_email":"kafka@team.co","last_modified":1518545834000}
+{"id":1,"name":"kafka","team_email":"kafka@apache.org","last_modified":1518544661000}
 ...
 ```
 
-So much better with a Schema Registry
+So much better with a Schema Registry!

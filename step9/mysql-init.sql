@@ -11,11 +11,13 @@ CREATE TABLE IF NOT EXISTS application (
 
 
 INSERT INTO application (
+  id,
   name,
   team_email,
   last_modified
 ) VALUES (
+  1,
   'kafka',
-  'kafka@team.co',
+  'kafka@apache.org',
   NOW()
 );
