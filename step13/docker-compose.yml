@@ -88,26 +88,24 @@ services:
 
   create-buckets:
     image: minio/mc
-    restart: on-failure
     depends_on:
       - minio
     entrypoint: >
       /bin/sh -c "
-      /usr/bin/mc config host add myminio http://minio:9000 AKIAIOSFODNN7EXAMPLE wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY;
-      /usr/bin/mc mb myminio/cdc;
-      exit 0;
+        /usr/bin/mc config host add myminio http://minio:9000 AKIAIOSFODNN7EXAMPLE wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY;
+        /usr/bin/mc mb myminio/cdc;
+        exit 0;
       "
 
   list-buckets:
     image: minio/mc
-    restart: on-failure
     depends_on:
       - minio
     entrypoint: >
       /bin/sh -c "
-      /usr/bin/mc config host add myminio http://minio:9000 AKIAIOSFODNN7EXAMPLE wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY;
-      /usr/bin/mc ls -r myminio/cdc;
-      exit 0;
+        /usr/bin/mc config host add myminio http://minio:9000 AKIAIOSFODNN7EXAMPLE wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY;
+        /usr/bin/mc ls -r myminio/cdc;
+        exit 0;
       "
 
   connect:
