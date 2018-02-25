@@ -10,3 +10,4 @@
 1. [Step 10 : Kafka Connect and Schema Registry](step10/)
 1. [Step 11 : Change Data Capture](step11/)
 1. [Step 11 : Change Data Capture anc Schema Registry](step12/)
+1. [Step 11 : Change Data Capture anc Schema Registry and export to S3](step13/)
