@@ -63,17 +63,6 @@ $ tar -xvf debezium-connector-mysql-0.7.3-plugin.tar.gz
        - ./debezium-connector-mysql:/usr/share/java/debezium-connector-mysql
 
 ```
-
-Also, let's go directly with Schema registry integration and setup the following env variables
-
-```
-      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
-      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-```
  
 Let's verify we have our connector ready to be used
 
@@ -112,7 +101,7 @@ $ docker-compose exec connect curl -s -XPOST -H "Content-Type: application/json;
         "database.server.name": "dbserver1",
         "database.whitelist": "mydb",
         "database.history.kafka.bootstrap.servers": "kafka-1:9092,kafka-2:9092,kafka-3:9092",
-        "database.history.kafka.topic": "schema-changes.db"
+        "database.history.kafka.topic": "schema-changes.mydb"
     }
 }'
  ```
@@ -149,7 +138,7 @@ $ docker-compose exec kafka-1 kafka-topics --zookeeper zookeeper:2181 --list
   connect-status
   dbserver1
   dbserver1.mydb.team
-  schema-changes.db
+  schema-changes.mydb
 ```
 
 Let's dig into out team topic
