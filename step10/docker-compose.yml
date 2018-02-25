@@ -54,13 +54,12 @@ services:
   mysql:
     image: mysql:5.7
     volumes:
-      - ../step9/mysql-init.sql:/mysql-init.sql
+      - ../step9/mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-    command: --init-file /mysql-init.sql
 
   schema-registry:
     image: confluentinc/cp-schema-registry:4.0.0
