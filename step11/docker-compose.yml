@@ -54,14 +54,14 @@ services:
   mysql:
     image: mysql:5.7
     volumes:
-      - ./mysql-init.sql:/mysql-init.sql
-      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./mysql.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-    command: --init-file /mysql-init.sql
+      MYSQL_ROOT_HOST: 172.%  # Allow docker containers to connect to mysql
 
   schema-registry:
     image: confluentinc/cp-schema-registry:4.0.0
@@ -99,8 +99,10 @@ services:
       CONNECT_REPLICATION_FACTOR: 2
       CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
       CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
       CONNECT_PLUGIN_PATH: "/usr/share/java"
       CONNECT_LOG4J_LOGGERS: org.reflections=ERROR

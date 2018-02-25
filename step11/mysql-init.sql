@@ -1,24 +1,26 @@
 GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'replicator' IDENTIFIED BY 'replpass';
+
 GRANT SELECT, RELOAD, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT  ON *.* TO 'debezium' IDENTIFIED BY 'dbz';
 
 
-CREATE DATABASE IF NOT EXISTS db;
-GRANT ALL PRIVILEGES ON db.* TO 'mysqluser'@'%';
+CREATE DATABASE mydb;
 
-USE db;
+GRANT ALL PRIVILEGES ON mydb.* TO 'user'@'%';
 
-CREATE TABLE IF NOT EXISTS application (
+USE mydb;
+
+CREATE TABLE team (
   id            INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name          VARCHAR(255) NOT NULL,
-  team_email    VARCHAR(255) NOT NULL,
+  email        VARCHAR(255) NOT NULL,
   last_modified DATETIME     NOT NULL
 );
 
 
-INSERT INTO application (
+INSERT INTO team (
   id,
   name,
-  team_email,
+  email,
   last_modified
 ) VALUES (
   1,
@@ -26,3 +28,6 @@ INSERT INTO application (
   'kafka@apache.org',
   NOW()
 );
+
+ALTER TABLE team AUTO_INCREMENT = 101;
+

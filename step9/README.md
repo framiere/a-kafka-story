@@ -10,14 +10,12 @@ services:
   mysql:
     image: mysql:5.7
     volumes:
-      - mysql:/var/lib/mysql
-      - ./mysql-init.sql:/mysql-init.sql
+      - ./mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-    command: --init-file /mysql-init.sql
 
 volumes:
   mysql:
