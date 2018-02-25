@@ -151,6 +151,11 @@ list-buckets_1     | [2018-02-25 21:34:39 UTC] 1.7KiB topics/dbserver1.mydb.team
 list-buckets_1     | [2018-02-25 21:34:41 UTC] 1.7KiB topics/dbserver1.mydb.team/partition=0/dbserver1.mydb.team+0+0000000015.avro
 ```
 
+In minio :
+
+![minio](./minio.png "Bucket")
+
+
 Perfect!
 
 # The full action ?
