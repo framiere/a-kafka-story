@@ -8,9 +8,9 @@ Getting Kafka Connect and Schema registry setup
 Let's post it
 
 ```
-$ curl -s -XPOST -H "Content-Type: application/json; charset=UTF-8" http://localhost:8083/connectors/ -d '
+$ docker-compose exec connect curl -s -XPOST -H "Content-Type: application/json; charset=UTF-8" http://localhost:8083/connectors/ -d '
 {
-    "name": "my-mysql-connector3",
+    "name": "my-mysql-connector",
     "config": {
       "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
       "tasks.max":"10",
@@ -19,7 +19,7 @@ $ curl -s -XPOST -H "Content-Type: application/json; charset=UTF-8" http://local
       "mode":"timestamp+incrementing",
       "timestamp.column.name":"last_modified",
       "incrementing.column.name":"id",
-      "topic.prefix":"mysql2-",
+      "topic.prefix":"mysql-",
       "key.ignore": true,
       "key.converter.schema.registry.url": "http://schema-registry:8082",
       "value.converter": "io.confluent.connect.avro.AvroConverter",
@@ -29,29 +29,13 @@ $ curl -s -XPOST -H "Content-Type: application/json; charset=UTF-8" http://local
     }
 }
 ' | jq .
-{
-  "name": "my-mysql-connector",
-  "config": {
-    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
-    "tasks.max": "10",
-    "connection.url": "jdbc:mysql://mysql:3306/db?user=user&password=password&useSSL=false",
-    "table.whitelist": "application",
-    "mode": "timestamp+incrementing",
-    "timestamp.column.name": "last_modified",
-    "incrementing.column.name": "id",
-    "topic.prefix": "mysql-",
-    "name": "my-mysql-connector"
-  },
-  "tasks": [],
-  "type": null
-}
 ```
 
 
 Let's see its status
 
 ```
-$ curl -s localhost:8083/connectors/my-mysql-connector/status | jq .
+$ docker-compose exec connect curl -s localhost:8083/connectors/my-mysql-connector/status | jq .
 {
   "name": "my-mysql-connector",
   "connector": {
@@ -60,8 +44,7 @@ $ curl -s localhost:8083/connectors/my-mysql-connector/status | jq .
   },
   "tasks": [
     {
-      "state": "FAILED",
-      "trace": "org.apache.kafka.connect.errors.ConnectException: java.sql.SQLException: No suitable driver found for jdbc:mysql://mysql:3306/db?user=user&password=password\n\tat io.confluent.connect.jdbc.util.CachedConnectionProvider.getValidConnection(CachedConnectionProvider.java:75)\n\tat io.confluent.connect.jdbc.JdbcSourceConnector.start(JdbcSourceConnector.java:95)\n\tat org.apache.kafka.connect.runtime.WorkerConnector.doStart(WorkerConnector.java:108)\n\tat org.apache.kafka.connect.runtime.WorkerConnector.start(WorkerConnector.java:133)\n\tat org.apache.kafka.connect.runtime.WorkerConnector.transitionTo(WorkerConnector.java:192)\n\tat org.apache.kafka.connect.runtime.Worker.startConnector(Worker.java:211)\n\tat org.apache.kafka.connect.runtime.distributed.DistributedHerder.startConnector(DistributedHerder.java:894)\n\tat org.apache.kafka.connect.runtime.distributed.DistributedHerder.access$1300(DistributedHerder.java:108)\n\tat org.apache.kafka.connect.runtime.distributed.DistributedHerder$15.call(DistributedHerder.java:910)\n\tat org.apache.kafka.connect.runtime.distributed.DistributedHerder$15.call(DistributedHerder.java:906)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\n\tat java.lang.Thread.run(Thread.java:745)\nCaused by: java.sql.SQLException: No suitable driver found for jdbc:mysql://mysql:3306/db?user=user&password=password\n\tat java.sql.DriverManager.getConnection(DriverManager.java:689)\n\tat java.sql.DriverManager.getConnection(DriverManager.java:247)\n\tat io.confluent.connect.jdbc.util.CachedConnectionProvider.newConnection(CachedConnectionProvider.java:85)\n\tat io.confluent.connect.jdbc.util.CachedConnectionProvider.getValidConnection(CachedConnectionProvider.java:68)\n\t... 13 more\n",
+      "state": "RUNNING",
       "id": 0,
       "worker_id": "connect:8083"
     }
@@ -94,7 +77,7 @@ Topic:mysql-application	PartitionCount:1	ReplicationFactor:3	Configs:
 Let's see the data
 
 ```
-$ docker-compose exec schema-registry kafka-avro-console-consumer -bootstrap-server kafka-1:9092,kafka-2:9092,kafka-3:9092 --topic mysql2-application --from-beginning --property schema.registry.url=http://localhost:8082
+$ docker-compose exec schema-registry kafka-avro-console-consumer -bootstrap-server kafka-1:9092,kafka-2:9092,kafka-3:9092 --topic mysql-application --from-beginning --property schema.registry.url=http://localhost:8082
   [2018-02-13 19:09:49,930] INFO ConsumerConfig values:
   	auto.commit.interval.ms = 5000
   	auto.offset.reset = earliest
@@ -106,3 +89,44 @@ $ docker-compose exec schema-registry kafka-avro-console-consumer -bootstrap-ser
 ```
 
 So much better with a Schema Registry!
+
+Let's add another element in the application 
+
+``` 
+$ docker-compose exec mysql mysql --user=root --password=password --database=db -e "
+INSERT INTO application (   \
+  id,   \
+  name, \
+  team_email,   \
+  last_modified \
+) VALUES (  \
+  2,    \
+  'another',  \
+  'another@apache.org',   \
+  NOW() \
+); "
+```
+
+```
+$ docker-compose exec mysql bash -c "mysql --user=root --password=password --database=db -e 'select * from application'"
+mysql: [Warning] Using a password on the command line interface can be insecure.
++----+---------+--------------------+---------------------+
+| id | name    | team_email         | last_modified       |
++----+---------+--------------------+---------------------+
+|  1 | kafka   | kafka@apache.org   | 2018-02-25 11:25:23 |
+|  2 | another | another@apache.org | 2018-02-25 11:31:10 |
++----+---------+--------------------+---------------------+
+```
+
+Let's verify that we have them in our topic 
+
+```
+$ docker-compose exec schema-registry kafka-avro-console-consumer -bootstrap-server kafka-1:9092,kafka-2:9092,kafka-3:9092 --topic mysql-application --from-beginning --property schema.registry.url=http://localhost:8082
+  [2018-02-13 19:09:49,930] INFO ConsumerConfig values:
+  	auto.commit.interval.ms = 5000
+  	auto.offset.reset = earliest
+  	bootstrap.servers = [kafka-1:9092, kafka-2:9092, kafka-3:9092]
+...
+{"id":1,"name":"kafka","team_email":"kafka@apache.org","last_modified":1519557923000}
+{"id":2,"name":"another","team_email":"another@apache.org","last_modified":1519558270000}
+```
