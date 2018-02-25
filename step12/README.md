@@ -86,3 +86,7 @@ $ docker-compose exec schema-registry kafka-avro-console-consumer -bootstrap-ser
 ```
 
 Perfect!
+
+# The full action ?
+
+[![screencast](https://asciinema.org/a/cuBXz5JjrzvM2j2jMdQWm2TWn.png)](https://asciinema.org/a/cuBXz5JjrzvM2j2jMdQWm2TWn?autoplay=1)

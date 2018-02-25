@@ -152,7 +152,7 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 Let's verify that we the update reflected in the topic 
 
 ```
-$ docker-compose exec schema-registry kafka-avro-console-consumer -bootstrap-server kafka-1:9092,kafka-2:9092,kafka-3:9092 --topic mysql-application --from-beginning --property schema.registry.url=http://localhost:8082 --property print.key=true
+$ docker-compose exec schema-registry kafka-avro-console-consumer -bootstrap-server kafka-1:9092,kafka-2:9092,kafka-3:9092 --topic mysql-application --from-beginning --property schema.registry.url=http://localhost:8082
   [2018-02-13 19:09:49,930] INFO ConsumerConfig values:
   	auto.commit.interval.ms = 5000
   	auto.offset.reset = earliest
@@ -170,7 +170,7 @@ $ docker-compose exec mysql mysql --user=root --password=password --database=db 
 ```
 
 ```
-$ docker-compose exec schema-registry kafka-avro-console-consumer -bootstrap-server kafka-1:9092,kafka-2:9092,kafka-3:9092 --topic mysql-application --from-beginning --property schema.registry.url=http://localhost:8082 --property print.key=true
+$ docker-compose exec schema-registry kafka-avro-console-consumer -bootstrap-server kafka-1:9092,kafka-2:9092,kafka-3:9092 --topic mysql-application --from-beginning --property schema.registry.url=http://localhost:8082
   [2018-02-13 19:09:49,930] INFO ConsumerConfig values:
   	auto.commit.interval.ms = 5000
   	auto.offset.reset = earliest
@@ -186,3 +186,7 @@ Nope, no new event ! With this method, either you load all data using `batch` or
 See https://docs.confluent.io/current/connect/connect-jdbc/docs/source_config_options.html#mode
 
 Enter Change data capture.
+
+# The full action ?
+
+[![screencast](https://asciinema.org/a/VpcebHg5COpfknwxyOi3zvP1u.png)](https://asciinema.org/a/VpcebHg5COpfknwxyOi3zvP1u?autoplay=1)

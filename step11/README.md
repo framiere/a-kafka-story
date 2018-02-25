@@ -328,7 +328,7 @@ Here's the formatted version :
 That's easy to understand, but let's outline the operation with `jq '{time_ms: .payload.ts_ms, op: .payload.op, table: .payload.source.table}`
 
 ```
-$ docker-compose exec kafka-1 kafka-console-consumer --bootstrap-server kafka-1:9092 --topic dbserver1.mydb.team --from-beginning | jq '{time_ms: .payload.ts_ms, op: .payload.op, table: .payload.source.table} '
+$ docker-compose exec kafka-1 kafka-console-consumer --bootstrap-server kafka-1:9092 --topic dbserver1.mydb.team --from-beginning | jq '{time_ms: .payload.ts_ms, op: .payload.op, table: .payload.source.table}'
 {
    "time_ms": 1519582917064,
                               "op": "c",
@@ -385,8 +385,8 @@ $ docker-compose exec kafka-1 kafka-console-consumer --bootstrap-server kafka-1:
                                                                                                                    }
 ```
 
-
 Let's update it
+
 ```
 $ docker-compose exec mysql mysql --user=root --password=password --database=mydb -e "UPDATE team set name='another name', last_modified = NOW() where id = '2'"
 
@@ -470,3 +470,7 @@ The deletion payload has the following form
   }
 }
 ```
+
+# The full action ?
+
+[![screencast](https://asciinema.org/a/lUa5RhZUeJOsPB4XSbM0VnVy3.png)](https://asciinema.org/a/lUa5RhZUeJOsPB4XSbM0VnVy3?autoplay=1)
