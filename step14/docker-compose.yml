@@ -59,10 +59,6 @@ services:
       - kafka-1
       - kafka-2
       - kafka-3
-    ports:
-      - "9098:9098"
     command: "perl -e 'while(1){ sleep 99999 }'"
     environment:
-      KSQL_CONFIG_DIR: "/etc/ksql"
       KSQL_LOG4J_OPTS: "-Dlog4j.configuration=file:/etc/ksql/log4j-rolling.properties"
-      STREAMS_BOOTSTRAP_SERVERS: "kafka-1:9092,kafka-2:9092,kafka-3:9092"
