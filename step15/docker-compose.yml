@@ -1,0 +1,78 @@
+version: '3.4'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper
+    hostname: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    healthcheck:
+      test: ["CMD", "bash", "-c", "echo ruok | nc localhost 2181 | grep imok"]
+      start_period: 30s
+
+  kafka-1:
+    image: confluentinc/cp-kafka
+    hostname: kafka-1
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+    healthcheck:
+      test: ["CMD", "nc", "127.0.0.1", "9092"]
+      start_period: 30s
+
+  kafka-2:
+    image: confluentinc/cp-kafka
+    hostname: kafka-2
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9092
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+    healthcheck:
+      test: ["CMD", "nc", "127.0.0.1", "9092"]
+      start_period: 30s
+
+  kafka-3:
+    image: confluentinc/cp-kafka
+    hostname: kafka-3
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:9092
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+    healthcheck:
+      test: ["CMD", "nc", "127.0.0.1", "9092"]
+      start_period: 30s
+
+  ksql-server:
+    image: "confluentinc/ksql-cli:0.5"
+    hostname: ksql-server
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+    volumes:
+      - ./ksqlserver.properties:/etc/ksql/ksqlserver.properties
+    ports:
+      - "8080:8080"
+    command: "ksql-server-start /etc/ksql/ksqlserver.properties"
+    environment:
+      KSQL_CONFIG_DIR: "/etc/ksql"
+      KSQL_LOG4J_OPTS: "-Dlog4j.configuration=file:/etc/ksql/log4j-rolling.properties"
+
+  ksql-cli:
+    image: "confluentinc/ksql-cli:0.5"
+    hostname: ksql-cli
+    depends_on:
+      - ksql-server
+    command: "perl -e 'while(1){ sleep 99999 }'"
+    environment:
+      KSQL_CONFIG_DIR: "/etc/ksql"
+      KSQL_LOG4J_OPTS: "-Dlog4j.configuration=file:/etc/ksql/log4j-rolling.properties"
