@@ -83,9 +83,10 @@ Ok makes sense.
 
 Fine, let's create a new stream to get only the simpsons
 
-```
+```sh
 $ docker-compose exec ksql-cli ksql-cli local --bootstrap-server kafka-1:9092
 ksql> SET 'auto.offset.reset' = 'earliest';
+Successfully changed local property 'auto.offset.reset' from 'null' to 'earliest'
 ksql> CREATE STREAM simpsons \
         AS SELECT * FROM heroes \
             WHERE name = 'simpson';
@@ -146,6 +147,7 @@ Let's do now some more non trivial computation now:
 
 ```
 ksql> SET 'auto.offset.reset' = 'earliest';
+Successfully changed local property 'auto.offset.reset' from 'null' to 'earliest'
 ksql> SELECT \
         name, \
         SUM(age)/COUNT(*) AS average, \
@@ -207,8 +209,9 @@ As we have stateful computation (GROUP BY) we have intermediary topics that stor
 
 We can also use windowing functions !
 
-```sh
+```
 ksql> SET 'auto.offset.reset' = 'earliest';
+Successfully changed local property 'auto.offset.reset' from 'null' to 'earliest'
 ksql> CREATE TABLE random_heroes_count AS \
         SELECT name, COUNT(*) AS count \
         FROM random_heroes \
@@ -274,8 +277,14 @@ And query the nested data
 
 ```
 ksql> SET 'auto.offset.reset' = 'earliest';
+Successfully changed local property 'auto.offset.reset' from 'null' to 'earliest'
 ksql> CREATE STREAM nested (name varchar, obj varchar) \
             WITH ( kafka_topic='nested',value_format='JSON');
+
+ Message
+----------------------------
+ Stream created and running
+---------------------------
 ksql> SELECT name, COUNT(EXTRACTJSONFIELD(obj,'$.subField')) FROM nested GROUP BY name;
 one | 2
 two | 1
