@@ -23,13 +23,13 @@ docker-compose exec connect curl -s -XPOST -H "Content-Type: application/json; c
         "transforms.unwrap.type": "io.debezium.transforms.UnwrapFromEnvelope",
         "transforms.unwrap.drop.tombstones":"false"
       }        
-    }
 }'
 ```
 
 Let's do database manipulation
 
 ```
+docker-compose exec mysql mysql --user=root --password=password --database=mydb -e "select * from team"
 docker-compose exec mysql mysql --user=root --password=password --database=mydb -e "
 INSERT INTO team (   \
   name, \
