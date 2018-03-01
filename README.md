@@ -13,3 +13,4 @@
 1. [Step 13 : Change Data Capture anc Schema Registry and export to S3](step13/)
 1. [Step 14 : Ksql](step14/)
 1. [Step 15 : Ksql server and UI](step15/)
+1. [Step 16 : Change Data Capture, Schema Registry and Ksql](step16/)
