@@ -276,7 +276,7 @@ echo '{"name":"one","obj":{"subField":1}}
 And query the nested data
 
 ```
-ksql> SET 'auto.offset.reset' = 'earliest';
+ksql> SET 'auto.offset.reset' = 'earliest';
 Successfully changed local property 'auto.offset.reset' from 'null' to 'earliest'
 ksql> CREATE STREAM nested (name varchar, obj varchar) \
             WITH ( kafka_topic='nested',value_format='JSON');
