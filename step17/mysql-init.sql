@@ -16,18 +16,32 @@ CREATE TABLE team (
   last_modified DATETIME     NOT NULL
 );
 
-
 INSERT INTO team (
   id,
   name,
   email,
   last_modified
 ) VALUES (
-  1,
+  '1',
   'kafka',
   'kafka@apache.org',
   NOW()
 );
 
-ALTER TABLE team AUTO_INCREMENT = 101;
+CREATE TABLE member (
+  id       INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  name     VARCHAR(255) NOT NULL,
+  team_id  INT          NOT NULL,
+  FOREIGN KEY (team_id) REFERENCES team(id)
+);
+
+INSERT INTO member (
+  id,
+  name,
+  team_id
+) VALUES (
+  '1',
+  'jun@confluent.io',
+  1
+);
 
