@@ -14,3 +14,4 @@
 1. [Ksql](step14/)
 1. [Ksql server and UI](step15/)
 1. [Change Data Capture, Schema Registry and Ksql](step16/)
+1. [Change Data Capture, JSON, Ksql and join](step17/)

@@ -12,19 +12,16 @@ USE mydb;
 CREATE TABLE team (
   id            INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name          VARCHAR(255) NOT NULL,
-  email         VARCHAR(255) NOT NULL,
   last_modified DATETIME     NOT NULL
 );
 
 INSERT INTO team (
   id,
   name,
-  email,
   last_modified
 ) VALUES (
   '1',
   'kafka',
-  'kafka@apache.org',
   NOW()
 );
 
@@ -41,7 +38,7 @@ INSERT INTO member (
   team_id
 ) VALUES (
   '1',
-  'jun@confluent.io',
+  'jun rao',
   1
 );
 
