@@ -49,8 +49,8 @@ $ docker-compose exec kafka-1 kafka-console-consumer \
     --from-beginning \
     --topic dbserver1.mydb.member 
 {"schema":{"type":"struct","fields":[{"type":"struct","fields":[{"type":"int32","optional":false,"field":"id"},{"type":"string","optional":false,"field":"name"},{"type":"int32","optional":false,"field":"team_id"}],"optional":true,"name":"dbserver1.mydb.member.Value","field":"before"},{"type":"struct","fields":[{"type":"int32","optional":false,"field":"id"},{"type":"string","optional":false,"field":"name"},{"type":"int32","optional":false,"field":"team_id"}],"optional":true,"name":"dbserver1.mydb.member.Value","field":"after"},{"type":"struct","fields":[{"type":"string","optional":true,"field":"version"},{"type":"string","optional":false,"field":"name"},{"type":"int64","optional":false,"field":"server_id"},{"type":"int64","optional":false,"field":"ts_sec"},{"type":"string","optional":true,"field":"gtid"},{"type":"string","optional":false,"field":"file"},{"type":"int64","optional":false,"field":"pos"},{"type":"int32","optional":false,"field":"row"},{"type":"boolean","optional":true,"field":"snapshot"},{"type":"int64","optional":true,"field":"thread"},{"type":"string","optional":true,"field":"db"},{"type":"string","optional":true,"field":"table"}],"optional":false,"name":"io.debezium.connector.mysql.Source","field":"source"},{"type":"string","optional":false,"field":"op"},{"type":"int64","optional":true,"field":"ts_ms"}],"optional":false,"name":"dbserver1.mydb.member.Envelope"},"payload":{"before":null,"after":{"id":1,"name":"jun@confluent.io","team_id":1},"source":{"version":"0.7.3","name":"dbserver1","server_id":0,"ts_sec":0,"gtid":null,"file":"mysql-bin.000003","pos":154,"row":0,"snapshot":true,"thread":null,"db":"mydb","table":"member"},"op":"c","ts_ms":1520106011272}}
-$ docker-compose exec schema-registry kafka-avro-console-consumer \
-    --bootstrap-server kafka-1:9092,kafka-2:9092,kafka-3:9092 \
+$ docker-compose exec kafka-1 kafka-console-consumer \
+    --bootstrap-server localhost:9092 \
     --topic dbserver1.mydb.team \
     --from-beginning
 {"before":null,"after":{"dbserver1.mydb.team.Value":{"id":1,"name":"kafka","email":"kafka@apache.org","last_modified":1520104389000}},"source":{"version":{"string":"0.7.3"},"name":"dbserver1","server_id":0,"ts_sec":0,"gtid":null,"file":"mysql-bin.000003","pos":154,"row":0,"snapshot":{"boolean":true},"thread":null,"db":{"string":"mydb"},"table":{"string":"team"}},"op":"c","ts_ms":{"long":1520104470998}}
@@ -183,27 +183,14 @@ dbserver1.mydb.member
 dbserver1.mydb.team
 ksql__commands
 schema-changes.mydb
-
-$ docker-compose exec kafka-1 kafka-console-consumer --bootstrap-server kafka-1:9092 --topic ksql_transient_680148418556711042_1520109125848-KSTREAM-REDUCE-STATE-STORE-0000000003-changelog --from-beginning --property print.key=true
-1	{"ROWTIME":1520108938520,"ROWKEY":"1","ID":"1","NAME":"kafka"}
-1	{"ROWTIME":1520109164958,"ROWKEY":"1","ID":"1","NAME":"another name"}
-
-$ docker-compose exec kafka-1 kafka-topics --zookeeper zookeeper:2181 --topic ksql_transient_680148418556711042_1520109125848-KSTREAM-REDUCE-STATE-STORE-0000000003-changelog --describe
-Topic:ksql_transient_680148418556711042_1520109125848-KSTREAM-REDUCE-STATE-STORE-0000000003-changelog	PartitionCount:4	ReplicationFactor:1	Configs:cleanup.policy=compact
-	Topic: ksql_transient_680148418556711042_1520109125848-KSTREAM-REDUCE-STATE-STORE-0000000003-changelog	Partition: 0	Leader: 3	Replicas: 3	Isr: 3
-	Topic: ksql_transient_680148418556711042_1520109125848-KSTREAM-REDUCE-STATE-STORE-0000000003-changelog	Partition: 1	Leader: 2	Replicas: 2	Isr: 2
-	Topic: ksql_transient_680148418556711042_1520109125848-KSTREAM-REDUCE-STATE-STORE-0000000003-changelog	Partition: 2	Leader: 1	Replicas: 1	Isr: 1
-	Topic: ksql_transient_680148418556711042_1520109125848-KSTREAM-REDUCE-STATE-STORE-0000000003-changelog	Partition: 3	Leader: 3	Replicas: 3	Isr: 3
 ```
-
-Please note the `cleanup.policy=compact`
 
 Let's materizalize this stream to make it accessible from the outside
 
 ```
 ksql> CREATE stream member_team_join AS SELECT m.name, t.name \
->       FROM member_stream m LEFT JOIN team_table t \
->       ON m.team_id = t.id;
+       FROM member_stream m LEFT JOIN team_table t \
+       ON m.team_id = t.id;
 
  Message
 ----------------------------
@@ -228,3 +215,8 @@ dbserver1.mydb.team
 ksql__commands
 schema-changes.mydb
 ```
+
+# The full action ?
+
+[![screencast](https://asciinema.org/a/cKabJiM4U4cP5kH2jxNaDjD02.png)](https://asciinema.org/a/cKabJiM4U4cP5kH2jxNaDjD02?autoplay=1)
+
