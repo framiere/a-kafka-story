@@ -19,6 +19,14 @@ import static com.github.framiere.Domain.Gender.FEMALE;
 import static com.github.framiere.RandomProducer.Operation.*;
 import static java.util.stream.Collectors.toList;
 
+/**
+ * ./kafka-topics --zookeeper localhost:2181 --list
+ * Address
+ * Member
+ * Team
+ * __consumer_offsets
+ * /kafka-console-consumer --bootstrap-server localhost:9092 --topic Team --property print.key=true --key-deserializer org.apache.kafka.common.serialization.IntegerDeserializer --from-beginning
+ */
 public class RandomProducer {
     private static final Faker faker = new Faker();
     private static final SecureRandom random = new SecureRandom();
@@ -150,7 +158,7 @@ public class RandomProducer {
                 .collect(toList());
     }
 
-    private static Operation randomOperation() {
+    private Operation randomOperation() {
         Operation operation = randomEnum(Operation.class);
         return operation.fire() ? operation : NO_OP;
     }
@@ -174,24 +182,18 @@ public class RandomProducer {
         int chance;
 
         boolean fire() {
-            return oneChanceIn(chance);
+            return random.nextInt(100) <= chance;
         }
-
     }
 
-    private static boolean oneChanceIn(int bound) {
-        int i = random.nextInt(100);
-        return i <= bound;
+    private void upsert(Operation operation, Producer<Integer, HasId> producer, HasId object) {
+        System.out.println(operation + " " + object);
+        producer.send(new ProducerRecord<>(object.getClass().getSimpleName(), object.getId(), object));
     }
 
-    private static void upsert(Operation operation, Producer<Integer, HasId> producer, HasId withId) {
-        System.out.println(operation + " " + withId.getId() + ":" + withId + " ");
-        producer.send(new ProducerRecord<Integer, HasId>(withId.getClass().getSimpleName(), withId.getId(), withId));
-    }
-
-    private static void delete(Operation operation, Producer<Integer, HasId> producer, HasId withId) {
-        System.out.println(operation + " " + withId.getId() + ":" + withId + " ");
-        producer.send(new ProducerRecord<Integer, HasId>(withId.getClass().getSimpleName(), withId.getId(), null));
+    private void delete(Operation operation, Producer<Integer, HasId> producer, HasId object) {
+        System.out.println(operation + " " + object);
+        producer.send(new ProducerRecord<>(object.getClass().getSimpleName(), object.getId(), null));
     }
 
     private Member newMember(List<Team> teams) {
@@ -218,12 +220,12 @@ public class RandomProducer {
                 .changeName();
     }
 
-    private static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
+    private <T extends Enum<?>> T randomEnum(Class<T> clazz) {
         int x = random.nextInt(clazz.getEnumConstants().length);
         return clazz.getEnumConstants()[x];
     }
 
-    private static <T> T randomElement(List<T> l) {
+    private <T> T randomElement(List<T> l) {
         return l.get(random.nextInt(l.size()));
     }
 }
