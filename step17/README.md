@@ -169,22 +169,6 @@ A new line is displayed
 Jay Kreps | kafka
 ```
 
-```
-```
-$ docker-compose exec kafka-1 kafka-topics --zookeeper zookeeper:2181 --list
-MEMBER_STREAM
-TEAM_STREAM
-__consumer_offsets
-__ksql_compatibility_check
-connect-config
-connect-offsets
-connect-status
-dbserver1.mydb.member
-dbserver1.mydb.team
-ksql__commands
-schema-changes.mydb
-```
-
 Let's materizalize this stream to make it accessible from the outside
 
 ```
