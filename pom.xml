@@ -12,5 +12,6 @@
     <modules>
         <module>step3</module>
         <module>step6</module>
-    </modules>    
+        <module>step18/streams</module>
+    </modules>
 </project>
