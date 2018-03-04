@@ -1,6 +1,6 @@
 # Objective 
 
-Cdc, Avro, KSql and Joins !
+Cdc, Avro, Json and Joins !
 
 ```sh
 
