@@ -171,3 +171,10 @@ services:
     build: operationtomysql/
     depends_on:
       - mysql
+
+  cdcdiff:
+    build: cdcdiff/
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3

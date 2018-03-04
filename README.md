@@ -15,4 +15,5 @@
 1. [Ksql server and UI](step15/)
 1. [Change Data Capture, Schema Registry and Ksql](step16/)
 1. [Change Data Capture, JSON, Ksql and join](step17/)
-1. [Complex joins](step18/)
+1. [Random producer and Complex joins](step18/)
+1. [Sync random producer and mysql, capture CDC diff and push it to telegraf](step18/)

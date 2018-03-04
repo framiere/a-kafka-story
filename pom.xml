@@ -14,5 +14,6 @@
         <module>step6</module>
         <module>step18/streamjoins</module>
         <module>step19/operationtomysql</module>
+        <module>step19/cdcdiff</module>
     </modules>
 </project>
