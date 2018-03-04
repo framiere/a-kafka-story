@@ -20,32 +20,29 @@ import static com.github.framiere.RandomProducer.Operation.*;
 import static java.util.stream.Collectors.toList;
 
 /**
- * ./kafka-topics --zookeeper localhost:2181 --list
- * Address
- * Member
- * Team
- * __consumer_offsets
- * /kafka-console-consumer --bootstrap-server localhost:9092 --topic Team --property print.key=true --key-deserializer org.apache.kafka.common.serialization.IntegerDeserializer --from-beginning
+ * Look at the data produced, by example:
+ * kafka-console-consumer --bootstrap-server localhost:9092 --topic Team --property print.key=true --key-deserializer org.apache.kafka.common.serialization.IntegerDeserializer --from-beginning
  */
 public class RandomProducer {
     private static final Faker faker = new Faker();
     private static final SecureRandom random = new SecureRandom();
-    public static final int NB_START_TEAMS = 10;
-    public static final int NB_START_MEMBERS = 10;
+    public static final int NB_START_TEAMS = 5;
+    public static final int NB_START_MEMBERS = 40;
     private int nbTeams = 0;
     private int nbMembers = 0;
 
     public static void main(String args[]) throws InterruptedException {
-        new RandomProducer();
+        new RandomProducer().produce(args.length == 1 ? args[0] : "localhost:9092");
     }
 
-    public RandomProducer() throws InterruptedException {
-
+    public void produce(String bootstrapServers) throws InterruptedException {
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class.getName());
+        props.put(ProducerConfig.BATCH_SIZE_CONFIG, 10);
+        props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");
         Producer<Integer, HasId> producer = new KafkaProducer<>(props);
 
         List<Team> teams = buildTeams(producer);
@@ -80,6 +77,9 @@ public class RandomProducer {
                 case TEAM_NAME_CHANGE:
                     upsert(operation, producer, randomTeam.changeName());
                     break;
+                case CHANGE_PHONE:
+                    upsert(operation, producer, randomAddress.changePhone());
+                    break;
                 case CHANGE_ADDRESS_IN_TOWN:
                     upsert(operation, producer, randomAddress.changeAddress());
                     break;
@@ -90,9 +90,10 @@ public class RandomProducer {
                     upsert(operation, producer, randomAddress.changeCountry());
                     break;
                 case CHANGE_GENDER:
-                    upsert(operation, producer, randomMember
-                            .withFirstname(faker.name().firstName())
-                            .withGender(randomEnum(Gender.class)));
+                    upsert(operation, producer,
+                            randomMember
+                                    .withFirstname(faker.name().firstName())
+                                    .withGender(randomEnum(Gender.class)));
                     break;
                 case DELETE_MEMBER:
                     delete(operation, producer, randomMember);
@@ -103,10 +104,12 @@ public class RandomProducer {
                     teams.remove(randomTeam);
                     break;
                 case CHANGE_TEAM:
-                    delete(operation, producer, randomMember.withTeam_id(randomTeam.id));
+                    delete(operation, producer,
+                            randomMember.withTeam(randomTeam));
                     break;
                 case CHANGE_ROLE:
-                    delete(operation, producer, randomMember.withRole(randomEnum(Role.class)));
+                    delete(operation, producer,
+                            randomMember.withRole(randomEnum(Role.class)));
                     break;
                 case NEW_MARITAL_STATUS:
                     MaritalStatus newMaritalStatus = randomEnum(MaritalStatus.class);
@@ -171,13 +174,14 @@ public class RandomProducer {
         DELETE_TEAM(3),
         DELETE_MEMBER(4),
         NEW_MARITAL_STATUS(5),
+        CHANGE_PHONE(2),
         CHANGE_ADDRESS_IN_TOWN(5),
         CHANGE_CITY(4),
-        CHANGE_COUNTRY(3),
-        CHANGE_GENDER(2),
-        CHANGE_TEAM(10),
+        CHANGE_COUNTRY(1),
+        CHANGE_GENDER(1),
+        CHANGE_TEAM(5),
         CHANGE_ROLE(11),
-        ANNIVERSARY(1),
+        ANNIVERSARY(2),
         NO_OP(100);
         int chance;
 
@@ -205,7 +209,8 @@ public class RandomProducer {
                 .withRole(randomEnum(Role.class))
                 .withMaritalStatus(randomEnum(MaritalStatus.class))
                 .withAge(random.nextInt(50))
-                .withTeam_id(randomElement(teams).id);
+                .withPhone(faker.phoneNumber().phoneNumber())
+                .withTeam(randomElement(teams));
     }
 
     private Address newAddress(Member member) {

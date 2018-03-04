@@ -21,10 +21,15 @@ public class Domain {
         public String firstname;
         public String lastname;
         public Gender gender;
+        public String phone;
         public MaritalStatus maritalStatus;
-        public int team_id;
+        public int teamId;
         public int age;
         public Role role;
+
+        public Member withTeam(Team team) {
+            return withTeamId(team.id);
+        }
     }
 
     @Data
@@ -55,11 +60,15 @@ public class Domain {
                     .withState(faker.address().state());
         }
 
-        public Address changeCountry() {
-            return changeState()
-                    .withCountry(faker.address().country());
+        public Address changePhone() {
+            return withCountry(faker.phoneNumber().phoneNumber());
         }
 
+        public Address changeCountry() {
+            return changeState()
+                    .changePhone()
+                    .withCountry(faker.address().country());
+        }
     }
 
     public enum MaritalStatus {
@@ -94,5 +103,16 @@ public class Domain {
         public Team changeName() {
             return withName(faker.team().name());
         }
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Wither
+    @EqualsAndHashCode(of = "id")
+    public static class Aggregate {
+        public Member member;
+        public Address address;
+        public Team team;
     }
 }
