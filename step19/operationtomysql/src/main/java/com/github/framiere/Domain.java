@@ -1,32 +1,28 @@
 package com.github.framiere;
 
-import com.github.javafaker.Faker;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Wither;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
 
-import java.security.SecureRandom;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import static com.github.framiere.Domain.OperationMode.*;
 
 public class Domain {
-    private static final Faker faker = new Faker();
-    private static final SecureRandom random = new SecureRandom();
-
-    public interface HasId {
-        int getId();
-    }
 
     @Data
+    @Entity
+    @Table(name = "Member")
     @EqualsAndHashCode(of = "id")
     @NoArgsConstructor
     @AllArgsConstructor
     @Wither
-    public static class Member implements HasId {
+    public static class Member {
+        @Id
         public int id;
         public String firstname;
         public String lastname;
@@ -36,49 +32,23 @@ public class Domain {
         public int teamId;
         public int age;
         public Role role;
-
-        public Member withTeam(Team team) {
-            return withTeamId(team.id);
-        }
     }
 
     @Data
+    @Entity
+    @Table(name = "Address")
     @EqualsAndHashCode(of = "id")
     @NoArgsConstructor
     @AllArgsConstructor
     @Wither
-    public static class Address implements HasId {
+    public static class Address {
+        @Id
         public int id;
         public String streetName;
         public String streetAddress;
         public String city;
         public String state;
         public String country;
-
-        public Address changeAddress() {
-            return withStreetName(faker.address().streetName())
-                    .withStreetAddress(faker.address().streetAddress());
-        }
-
-        public Address changeCity() {
-            return changeAddress()
-                    .withCity(faker.address().city());
-        }
-
-        public Address changeState() {
-            return changeCity()
-                    .withState(faker.address().state());
-        }
-
-        public Address changePhone() {
-            return withCountry(faker.phoneNumber().phoneNumber());
-        }
-
-        public Address changeCountry() {
-            return changeState()
-                    .changePhone()
-                    .withCountry(faker.address().country());
-        }
     }
 
     public enum MaritalStatus {
@@ -102,17 +72,16 @@ public class Domain {
     }
 
     @Data
+    @Entity
+    @Table(name = "Team")
     @EqualsAndHashCode(of = "id")
     @NoArgsConstructor
     @AllArgsConstructor
     @Wither
-    public static class Team implements HasId {
+    public static class Team {
+        @Id
         public int id;
         public String name;
-
-        public Team changeName() {
-            return withName(faker.team().name());
-        }
     }
 
     @Data
@@ -145,16 +114,6 @@ public class Domain {
         NO_OP(100, NONE);
         int chanceOfHappening;
         OperationMode operationMode;
-
-        boolean fire() {
-            return random.nextInt(100) <= chanceOfHappening;
-        }
-
-        public void call(Producer<Integer, Object> producer, HasId object) {
-            System.out.println(this + " " + object);
-            producer.send(new ProducerRecord<>(object.getClass().getSimpleName(), object.getId(), operationMode == DELETE ? null : object));
-            producer.send(new ProducerRecord<>(RandomProducerAction.class.getSimpleName(), new RandomProducerAction(this, object.getClass().getSimpleName(), object)));
-        }
     }
 
     enum OperationMode {
@@ -164,10 +123,12 @@ public class Domain {
         NONE
     }
 
+    @Data
     @AllArgsConstructor
-    private static class RandomProducerAction {
+    @NoArgsConstructor
+    public static class RandomProducerAction {
         public Operation operation;
         public String clazz;
-        public HasId object;
+        public Object object;
     }
 }

@@ -21,7 +21,7 @@ $ docker-compose exec connect curl -s -XPOST -H "Content-Type: application/json;
         "database.history.kafka.topic": "schema-changes.mydb",
         "include.schema.changes": "false" ,
         "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-        "key.converter.schemas.enable": false,
+        "value.converter.schemas.enable": false,
         "key.converter": "org.apache.kafka.connect.json.JsonConverter",
         "key.converter.schemas.enable": false    
       }        
