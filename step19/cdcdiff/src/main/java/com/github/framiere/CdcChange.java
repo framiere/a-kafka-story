@@ -10,13 +10,14 @@ public class CdcChange {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public String toTelegraf(String json) {
-        return toTelegraf(json.getBytes());
+        return json == null ? null : toTelegraf(json.getBytes());
     }
 
     public String toTelegraf(byte[] json) {
         try {
-            JsonNode payload = OBJECT_MAPPER.readTree(json).get("payload");
-            if (payload == null || payload.has("op") == false || payload.has("source") == false || payload.has("before") == false) {
+            JsonNode payload = OBJECT_MAPPER.readTree(json);
+            if (payload == null || !payload.has("op") || !payload.has("source") || !payload.has("before")) {
+                System.err.println("Payload has not the required fields");
                 return null;
             }
             String op = payload.get("op").asText();
@@ -27,15 +28,19 @@ public class CdcChange {
             String line = "cdc,table=" + table + ",operation=";
             switch (op) {
                 case "u":
-                    return line + "update" + getId(afterNode) + toUpdate(beforeNode, afterNode);
+                    return line + "update" + getId(afterNode) + toUpdate(beforeNode, afterNode) + ",found=1 " + getTimeInS(payload);
                 case "d":
-                    return line + "delete" + getId(beforeNode);
+                    return line + "delete" + getId(beforeNode) + " found=1 " + getTimeInS(payload);
                 default:
-                    return line + "create" + getId(afterNode);
+                    return line + "insert" + getId(afterNode) + " found=1 " + getTimeInS(payload);
             }
         } catch (IOException e) {
             return "";
         }
+    }
+
+    private String getTimeInS(JsonNode payload) {
+        return payload.get("ts_ms").asText() + "000000";
     }
 
     private String getId(JsonNode afterNode) {
@@ -51,8 +56,8 @@ public class CdcChange {
         LongAdder nbChanges = new LongAdder();
         beforeNode.fieldNames()
                 .forEachRemaining(f -> {
-                            if (beforeNode.get(f).asText().equals(afterNode.get(f).asText())) {
-                                line.append("," + f + "=true");
+                            if (!beforeNode.get(f).asText().equals(afterNode.get(f).asText())) {
+                                line.append("," + f + "=updated");
                                 nbChanges.increment();
                             }
                         }

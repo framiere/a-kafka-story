@@ -5,18 +5,16 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
-import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.processor.WallclockTimestampExtractor;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import static java.util.concurrent.TimeUnit.HOURS;
-
 public class Application {
-    private static long windowRetentionTimeMs = HOURS.toMillis(4);
+    private static final List<String> TOPICS = Arrays.asList("dbserver1.mydb.Team", "dbserver1.mydb.Member", "dbserver1.mydb.Address");
     private final CdcChange cdcChange = new CdcChange();
 
     public static void main(String[] args) throws Exception {
@@ -27,16 +25,12 @@ public class Application {
         waitForTopics(bootstrapServers);
 
         StreamsBuilder builder = new StreamsBuilder();
-        KStream<byte[], byte[]> members = builder
-                .stream(
-                        Arrays.asList("dbserver1.mydb.Team", "dbserver1.mydb.Member", "dbserver1.mydb.Address"),
-                        Consumed.with(Serdes.ByteArray(), Serdes.ByteArray()));
-
-        members
+        builder
+                .stream(TOPICS, Consumed.with(Serdes.String(), Serdes.String()))
                 .mapValues(cdcChange::toTelegraf)
-                .filter((k,v) -> v != null && !v.isEmpty())
+                .filter((k, v) -> v != null && !v.isEmpty())
                 .peek((k, v) -> System.out.println(v))
-                .to("telegraf", Produced.with(Serdes.ByteArray(), Serdes.String()));
+                .to("telegraf", Produced.with(Serdes.String(), Serdes.String()));
 
         Topology build = builder.build();
 
@@ -53,7 +47,7 @@ public class Application {
             Properties properties = new Properties();
             properties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
             AdminClient adminClient = AdminClient.create(properties);
-            if (adminClient.listTopics().names().get().size() > 2) {
+            if (adminClient.listTopics().names().get().containsAll(TOPICS)) {
                 return;
             }
             System.out.println("Waiting for data");

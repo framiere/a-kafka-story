@@ -81,7 +81,9 @@ services:
     entrypoint: >
       /bin/sh -c "
         /usr/bin/mc config host add myminio http://minio:9000 AKIAIOSFODNN7EXAMPLE wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY;
-        /usr/bin/mc mb myminio/cdc;
+        while ! /usr/bin/mc mb myminio/cdc; do
+          sleep 5
+        done
         exit 0;
       "
 
@@ -92,7 +94,9 @@ services:
     entrypoint: >
       /bin/sh -c "
         /usr/bin/mc config host add myminio http://minio:9000 AKIAIOSFODNN7EXAMPLE wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY;
-        /usr/bin/mc ls -r myminio/cdc;
+        while ! /usr/bin/mc ls -r myminio/cdc; do
+          sleep 5
+        done
         exit 0;
       "
 
@@ -178,3 +182,48 @@ services:
       - kafka-1
       - kafka-2
       - kafka-3
+
+  influxdb:
+    image: influxdb:1.5.2
+    ports:
+      - "8086:8086"
+    healthcheck:
+      test: ["CMD", "influx", "-host", "127.0.0.1", "-port", "8086", "-execute", "SHOW DATABASES"]
+      start_period: 30s
+
+  grafana:
+    image: grafana/grafana:5.1.2
+    ports:
+      - "3000:3000"
+    depends_on:
+      - influxdb
+    environment:
+      GF_INSTALL_PLUGINS: jdbranham-diagram-panel,novalabs-annotations-panel,vonage-status-panel,bessler-pictureit-panel,grafana-piechart-panel
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      start_period: 30s
+
+  grafana-setup:
+    build: ../step8/grafana-setup/
+    depends_on:
+      - grafana
+
+  telegraf-topic:
+    image: confluentinc/cp-kafka
+    command: bash -c "cub kafka-ready -z zookeeper:2181 3 120 && kafka-topics --zookeeper zookeeper:2181 --create --topic telegraf --partitions 10 --replication-factor 3"
+    depends_on:
+      - zookeeper
+      - kafka-1
+      - kafka-2
+      - kafka-3
+
+  kafka-to-influxdb:
+    image: telegraf:1.6.2
+    restart: unless-stopped
+    volumes:
+      - ../step8/telegraf-kafka-to-influxdb.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+      - influxdb
