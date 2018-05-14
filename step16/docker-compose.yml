@@ -124,7 +124,7 @@ services:
     volumes:
       - ./ksqlserver.properties:/etc/ksql/ksqlserver.properties
     ports:
-      - "8080:8080"
+      - "8088:8088"
     command: "ksql-server-start /etc/ksql/ksqlserver.properties"
     environment:
       KSQL_CONFIG_DIR: "/etc/ksql"

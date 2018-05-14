@@ -5,10 +5,10 @@ Enter remote ksql and UI
 Run the cli to connect to the server
 
 ```
-$ docker-compose exec ksql-cli ksql-cli remote http://ksql-server:8080
+$ docker-compose exec ksql-cli ksql-cli remote http://ksql-server:8088
 KSQL, Copyright 2017 Confluent Inc.
 
-CLI v0.5, Server v0.5 located at http://ksql-server:8080
+CLI v0.5, Server v0.5 located at http://ksql-server:8088
 
 Having trouble? Type 'help' (case-insensitive) for a rundown of how things work!
 

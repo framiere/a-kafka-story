@@ -47,7 +47,7 @@ docker-compose exec mysql mysql --user=root --password=password --database=mydb 
 Use ksql
 
 ```
-$ docker-compose exec ksql-cli ksql-cli remote http://ksql-server:8080
+$ docker-compose exec ksql-cli ksql-cli remote http://ksql-server:8088
 ksql> SET 'auto.offset.reset' = 'earliest';
 Successfully changed local property 'auto.offset.reset' from 'null' to 'earliest'
 ksql> CREATE STREAM team WITH (KAFKA_TOPIC='dbserver1.mydb.team', VALUE_FORMAT='AVRO');
