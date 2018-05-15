@@ -1,7 +1,7 @@
 1. [One zookeeper, one kafka broker](step1/)
 1. [One zookeeper, many kafka brokers](step2/)
 1. [Java consumer, java producer](step3/)
-1. [let's add data with telegraf](step4/)
+1. [Let's add data with telegraf](step4/)
 1. [Let's setup better defaults](step5/)
 1. [Enter kafka stream](step6/)
 1. [Capture JMX metrics](step7/)

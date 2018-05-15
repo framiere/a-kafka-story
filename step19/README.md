@@ -2,9 +2,6 @@
 
 # Enable CDC
 ```sh
-
-docker-compose exec connect curl  -XDELETE -H "Content-Type: application/json; charset=UTF-8" http://localhost:8083/connectors/debezium-connector
-
 $ docker-compose exec connect curl -s -XPOST -H "Content-Type: application/json; charset=UTF-8" http://localhost:8083/connectors/ -d '
 {
     "name": "debezium-connector",
@@ -31,8 +28,7 @@ $ docker-compose exec connect curl -s -XPOST -H "Content-Type: application/json;
 
 # Enable Push to S3!
 
-```
-docker-compose exec connect curl  -XDELETE -H "Content-Type: application/json; charset=UTF-8" http://localhost:8083/connectors/s3-sink
+```sh 
 $ docker-compose exec connect curl  -XPOST -H "Content-Type: application/json; charset=UTF-8" http://localhost:8083/connectors/ -d '
 {
     "name": "s3-sink",
@@ -57,7 +53,6 @@ $ docker-compose exec connect curl  -XPOST -H "Content-Type: application/json; c
     }
 }'
 ```
-
 
 ## Show graph dependencies
 ```
@@ -95,18 +90,26 @@ $ docker-compose exec ksql-cli ksql http://ksql-server:8088
 ```
 
 ```sql
-CREATE STREAM OPERATIONS (operation varchar, class varchar) \
+CREATE STREAM OPERATIONS (operation varchar, clazz varchar) \
     WITH ( kafka_topic='RandomProducerAction',value_format='JSON');
 
-CREATE TABLE "BY_OPERATION" WITH (PARTITIONS=1) AS \
+CREATE TABLE BY_OPERATION WITH (PARTITIONS=1) AS \
 SELECT operation, count(*) as count \
 FROM OPERATIONS \
 WINDOW TUMBLING (SIZE 20 SECONDS) \
 GROUP BY operation;
 
-CREATE TABLE "BY-CLASS" AS \
+CREATE TABLE BY_CLASS WITH (PARTITIONS=1) AS \
 SELECT class, count(*) as count \
 FROM OPERATIONS \
 WINDOW TUMBLING (SIZE 20 SECONDS) \
-GROUP BY class;
+GROUP BY clazz;
 ```
+
+
+# Links
+
+[Confluent Control Center](http://localhost:9021/)
+
+[Grafana](http://admin:admin@localhost:3000/)
+
