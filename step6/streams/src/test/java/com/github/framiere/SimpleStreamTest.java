@@ -24,12 +24,11 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SimpleStreamTest2 {
+public class SimpleStreamTest {
     private static final long DEFAULT_TIMEOUT = 30 * 1000L;
 
     @ClassRule
