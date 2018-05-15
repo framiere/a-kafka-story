@@ -59,7 +59,7 @@ $ docker-compose exec connect curl  -XPOST -H "Content-Type: application/json; c
 ```
 
 
-Show graph dependencies
+## Show graph dependencies
 ```
 $ docker run --rm -it --name dcv -v $(pwd):/input pmsipilot/docker-compose-viz \
     render \
@@ -73,12 +73,19 @@ $ docker run --rm -it --name dcv -v $(pwd):/input pmsipilot/docker-compose-viz \
 ![No volumes](./docker-compose-novolume.png "No Volume")
 
 
-Show graph dependencies with volumes
+## Show graph dependencies with volumes
 
 ```
 $ docker run --rm -it --name dcv -v $(pwd):/input pmsipilot/docker-compose-viz render --horizontal --output-format image --force docker-compose.yml
 ```
 ![Volumes](./docker-compose-volumes.png "Volumes")
+
+
+## Without Confluent Control Center ?
+
+![NoControlCenter](./docker-compose-no-control-center.png "No Control Center")
+
+What a nice bus!
 
 
 # Ksql
