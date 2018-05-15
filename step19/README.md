@@ -61,5 +61,37 @@ $ docker-compose exec connect curl  -XPOST -H "Content-Type: application/json; c
 
 Show graph dependencies
 ```
-$ docker run --rm -it --name dcv -v $(pwd):/input pmsipilot/docker-compose-viz render -m image docker-compose.yml
+$ docker run --rm -it --name dcv -v $(pwd):/input pmsipilot/docker-compose-viz render --horizontal --output-format image --no-volumes --force docker-compose.yml
+```
+
+![No volumes](./docker-compose.png "No Volumes")
+
+
+Show graph dependencies with volumes
+
+```
+$ docker run --rm -it --name dcv -v $(pwd):/input pmsipilot/docker-compose-viz render --horizontal --output-format image --force docker-compose.yml
+```
+
+# Ksql
+
+```
+$ docker-compose exec ksql-cli ksql http://ksql-server:8088
+```
+
+```sql
+CREATE STREAM OPERATIONS (operation varchar, class varchar) \
+    WITH ( kafka_topic='RandomProducerAction',value_format='JSON');
+
+CREATE TABLE "BY_OPERATION" WITH (PARTITIONS=1) AS \
+SELECT operation, count(*) as count \
+FROM OPERATIONS \
+WINDOW TUMBLING (SIZE 20 SECONDS) \
+GROUP BY operation;
+
+CREATE TABLE "BY-CLASS" AS \
+SELECT class, count(*) as count \
+FROM OPERATIONS \
+WINDOW TUMBLING (SIZE 20 SECONDS) \
+GROUP BY class;
 ```

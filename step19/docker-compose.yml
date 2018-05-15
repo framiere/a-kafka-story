@@ -137,7 +137,7 @@ services:
       start_period: 30s
 
   ksql-server:
-    image: "confluentinc/ksql-cli:0.5"
+    image: "confluentinc/ksql-cli:5.0.0-beta1"
     hostname: ksql-server
     depends_on:
       - kafka-1
@@ -146,14 +146,14 @@ services:
     volumes:
       - ../step16/ksqlserver.properties:/etc/ksql/ksqlserver.properties
     ports:
-      - "8080:8080"
+      - "8088:8088"
     command: "ksql-server-start /etc/ksql/ksqlserver.properties"
     environment:
       KSQL_CONFIG_DIR: "/etc/ksql"
       KSQL_LOG4J_OPTS: "-Dlog4j.configuration=file:/etc/ksql/log4j-rolling.properties"
 
   ksql-cli:
-    image: "confluentinc/ksql-cli:0.5"
+    image: "confluentinc/ksql-cli:5.0.0-beta1"
     hostname: ksql-cli
     depends_on:
       - ksql-server
@@ -227,3 +227,39 @@ services:
       - kafka-2
       - kafka-3
       - influxdb
+
+  ksql-json-to-influxdb:
+    image: telegraf:1.6.2
+    restart: unless-stopped
+    volumes:
+      - ./ksql-json-to-influxdb.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+      - influxdb
+
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:5.0.0-beta1-2
+    restart: always
+    depends_on:
+      - zookeeper
+      - kafka-1
+      - kafka-2
+      - kafka-3
+      - connect
+      - ksql-server
+    ports:
+      - "9021:9021"
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: "kafka-1:9092,kafka-2:9092,kafka-3:9092"
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      CONTROL_CENTER_REPLICATION_FACTOR: 2
+      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_REPLICATION: 2
+      CONTROL_CENTER_INTERNAL_TOPICS_REPLICATION: 2
+      CONTROL_CENTER_COMMAND_TOPIC_REPLICATION: 2
+      CONTROL_CENTER_METRICS_TOPIC_REPLICATION: 2
+      CONTROL_CENTER_STREAMS_NUM_STREAM_THREADS: 2
+      CONTROL_CENTER_CONNECT_CLUSTER: "connect:8083"
+      CONTROL_CENTER_KSQL_ENDPOINT: "http://ksql-server:8088"
+      CONTROL_CENTER_STREAMS_CONSUMER_REQUEST_TIMEOUT_MS: "960032"
