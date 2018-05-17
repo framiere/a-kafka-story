@@ -127,7 +127,7 @@ public class RandomProducer {
                 default:
                     throw new IllegalArgumentException(operation + " is not supported");
             }
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(10);
         }
     }
 
