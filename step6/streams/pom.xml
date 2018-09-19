@@ -58,7 +58,7 @@
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.github.framiere.SimpleJoinStream</mainClass>
+                                    <mainClass>com.github.framiere.SimpleStream</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
