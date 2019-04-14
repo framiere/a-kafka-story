@@ -51,14 +51,13 @@ services:
       test: ["CMD", "nc", "127.0.0.1", "9092"]
       start_period: 30s
 
-
-  ksql-cli:
-    image: "confluentinc/ksql-cli:0.5"
+  ksql:
+    image: confluentinc/cp-ksql-server:5.2.1
     hostname: ksql-cli
     depends_on:
       - kafka-1
       - kafka-2
       - kafka-3
-    command: "perl -e 'while(1){ sleep 99999 }'"
     environment:
-      KSQL_LOG4J_OPTS: "-Dlog4j.configuration=file:/etc/ksql/log4j-rolling.properties"
+      KSQL_BOOTSTRAP_SERVERS: kafka-1:9092
+      KSQL_LISTENERS: http://0.0.0.0:8088
