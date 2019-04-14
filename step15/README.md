@@ -1,24 +1,28 @@
 # Objective 
 
-Enter remote ksql and UI
+Create Streams, query streams from UI
 
-Run the cli to connect to the server
+Access the Control Center UI at http://localhost:9021
 
-```
-$ docker-compose exec ksql-cli ksql-cli remote http://ksql-server:8088
-KSQL, Copyright 2017 Confluent Inc.
+On the left menu click on KSQL
+![ksql](./ksql-ui.png "ksql")
 
-CLI v0.5, Server v0.5 located at http://ksql-server:8088
+Click `streams` tab, then on `Add a stream` Button
 
-Having trouble? Type 'help' (case-insensitive) for a rundown of how things work!
+![create-streams](./create-streams.png "Create Streams")`
 
-ksql>
-```
+Select the source topic for the stream
 
-You can also use the UI at http://localhost:8080
+![streams-topic](./streams-topic.png "Choose topic")
 
-![editor](./editor.png "Editor")
+Configure the Stream
 
-![Live topic data](./live_topic_data.png "Live Topic Data")
+**IMPORTANT: Don't forget to fill `How are your message encoded?``**
 
-![Show topics](./show_topics.png "Show topics")
+Note that Control Center discovered all the field !
+
+![streams-field](./streams-field.png "Configure stream")
+
+Let's query the result !
+
+![run-query](./streams-result.png "Run a query")

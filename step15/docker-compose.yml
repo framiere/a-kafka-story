@@ -58,6 +58,29 @@ services:
       - kafka-1
       - kafka-2
       - kafka-3
+    ports:
+      - "8088:8088"
     environment:
       KSQL_BOOTSTRAP_SERVERS: kafka-1:9092
       KSQL_LISTENERS: http://0.0.0.0:8088
+
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:5.2.1
+    container_name: control-center
+    restart: always
+    depends_on:
+      - zookeeper
+      - kafka-1
+      - kafka-2
+      - kafka-3
+      - ksql
+    ports:
+      - "9021:9021"
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: "kafka-1:9091,kafka-2:9092"
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      CONTROL_CENTER_KSQL_URL: "http://ksql:8088"
+      CONTROL_CENTER_REST_LISTENERS: "http://0.0.0.0:9021"
+      CONTROL_CENTER_KSQL_ADVERTISED_URL: "http://localhost:8088"
+      CONTROL_CENTER_REPLICATION_FACTOR: 3
+
