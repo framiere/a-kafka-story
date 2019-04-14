@@ -24,7 +24,7 @@ heroes
 Let's kickstart KSQL
 
 ```
-$ docker-compose exec ksql-cli ksql-cli local --bootstrap-server kafka-1:9092
+$ docker-compose exec ksql ksql
 ```
 
 Specify to get to earliest data
@@ -62,20 +62,21 @@ Let's our topics again
 
 ```
 $ docker-compose exec kafka-1 kafka-topics --zookeeper zookeeper:2181 --list
+__confluent.support.metrics
 __consumer_offsets
+_confluent-ksql-default__command_topic
 heroes
-ksql__commands
 ```
 
 `heroes` has been created by us
-`ksql__commands` is created by ksql
+`_confluent-ksql-default__command_topic` is created by ksql
 `__consumer_offsets` has been created via the consumer used by ksql
 
-Let's look into `ksql__commands`
+Let's look into `_confluent-ksql-default__command_topic`
 
 ```
-$ docker-compose exec kafka-1 kafka-console-consumer --bootstrap-server kafka-1:9092 --topic ksql__commands --from-beginning
-  {"statement":"CREATE STREAM heroes (name varchar, firstname varchar, age bigint)         WITH ( kafka_topic='heroes',value_format='JSON');","streamsProperties":{}}
+$ docker-compose exec kafka-1 kafka-console-consumer --bootstrap-server kafka-1:9092 --topic _confluent-ksql-default__command_topic --from-beginning
+  {"statement":"CREATE STREAM heroes (name varchar, firstname varchar, age bigint)         WITH ( kafka_topic='heroes',value_format='JSON');","streamsProperties":{},"originalProperties":{"ksql.extension.dir":"ext","ksql.streams.cache.max.bytes.buffering":"10000000","ksql.transient.prefix":"transient_","ksql.named.internal.topics":"on","ksql.windowed.session.key.legacy":"false","ksql.schema.registry.url":"http://localhost:8081","ksql.streams.default.deserialization.exception.handler":"io.confluent.ksql.errors.LogMetricAndContinueExceptionHandler","ksql.output.topic.name.prefix":"","ksql.streams.auto.offset.reset":"latest","ksql.sink.partitions":"4","ksql.avro.maps.named":"true","ksql.statestore.suffix":"_ksql_statestore","ksql.service.id":"default_","ksql.streams.default.production.exception.handler":"io.confluent.ksql.errors.ProductionExceptionHandlerUtil$LogAndFailProductionExceptionHandler","ksql.streams.bootstrap.servers":"kafka-1:9092","ksql.streams.commit.interval.ms":"2000","ksql.sink.replicas":"1","ksql.streams.topology.optimization":"all","ksql.streams.num.stream.threads":"4","ksql.udfs.enabled":"true","ksql.udf.enable.security.manager":"true","ksql.functions.substring.legacy.args":"false","ksql.streams.application.id":"KSQL_REST_SERVER_DEFAULT_APP_ID","ksql.sink.window.change.log.additional.retention":"1000000","ksql.udf.collect.metrics":"false","ksql.persistent.prefix":"query_","ksql.query.persistent.active.limit":"2147483647"}}
 
 ```
 
@@ -84,7 +85,7 @@ Ok makes sense.
 Fine, let's create a new stream to get only the simpsons
 
 ```sh
-$ docker-compose exec ksql-cli ksql-cli local --bootstrap-server kafka-1:9092
+$ docker-compose exec ksql ksql
 ksql> SET 'auto.offset.reset' = 'earliest';
 Successfully changed local property 'auto.offset.reset' from 'null' to 'earliest'
 ksql> CREATE STREAM simpsons \
@@ -134,7 +135,9 @@ Let's see the topics again
 $ docker-compose exec kafka-1 kafka-topics --zookeeper zookeeper:2181 --list
 RANDOM_HEROES
 SIMPSONS
+__confluent.support.metrics
 __consumer_offsets
+_confluent-ksql-default__command_topic
 heroes
 ksql__commands
 ```
@@ -197,11 +200,13 @@ $ docker-compose exec kafka-1 kafka-topics --zookeeper zookeeper:2181 --list
 HEROES_AGES
 RANDOM_HEROES
 SIMPSONS
+__confluent.support.metrics
 __consumer_offsets
+_confluent-ksql-default__command_topic
+_confluent-ksql-default_query_CTAS_HEROES_AGES_2-Aggregate-aggregate-changelog
+_confluent-ksql-default_query_CTAS_HEROES_AGES_2-Aggregate-groupby-repartition
 heroes
 ksql__commands
-ksql_query_CTAS_HEROES_AGES-KSTREAM-AGGREGATE-STATE-STORE-0000000005-changelog
-ksql_query_CTAS_HEROES_AGES-KSTREAM-AGGREGATE-STATE-STORE-0000000005-repartition
 ```
 
 As we have stateful computation (GROUP BY) we have intermediary topics that store this computation and enable resiliency.
@@ -217,7 +222,7 @@ ksql> CREATE TABLE random_heroes_count AS \
         FROM random_heroes \
         WINDOW HOPPING (SIZE 20 SECONDS, ADVANCE BY 20 SECONDS) \
         GROUP BY name;
-ksql> 
+ksql> SELECT * FROM random_heroes_count;
 1519773520000 | random-0 : Window{start=1519773520000 end=-} | random-0 | 2
 1519773500000 | random-0 : Window{start=1519773500000 end=-} | random-0 | 2
 1519773480000 | random-3 : Window{start=1519773480000 end=-} | random-3 | 2
