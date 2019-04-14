@@ -5,12 +5,10 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
-import org.apache.kafka.streams.kstream.JoinWindows;
-import org.apache.kafka.streams.kstream.Joined;
-import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.*;
 import org.apache.kafka.streams.processor.WallclockTimestampExtractor;
 
+import java.time.Duration;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -52,12 +50,12 @@ public class SimpleJoinStream {
                 .join(
                         addresses.filter((key, address) -> address != null && "USA".equals(address.country)),
                         (member, address) -> new Aggregate().withMember(member).withAddress(address),
-                        JoinWindows.of(SECONDS.toMillis(30)).until(windowRetentionTimeMs),
+                        JoinWindows.of(Duration.ofSeconds(30)).grace(Duration.ofMillis(windowRetentionTimeMs)),
                         Joined.with(Serdes.Integer(), memberSerde, addressSerde))
                 .outerJoin(
                         teams,
                         (aggregate, team) -> (aggregate == null ? new Aggregate() : aggregate).withTeam(team),
-                        JoinWindows.of(SECONDS.toMillis(50)).until(windowRetentionTimeMs),
+                        JoinWindows.of(Duration.ofSeconds(50)).grace(Duration.ofMillis(windowRetentionTimeMs)),
                         Joined.with(Serdes.Integer(), aggregateSerde, teamSerde))
                 .peek((k, aggregate) -> System.out.println(aggregate))
                 .to(Aggregate.class.getSimpleName(), Produced.with(Serdes.Integer(), aggregateSerde));
