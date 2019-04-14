@@ -64,7 +64,7 @@ services:
       MYSQL_ROOT_HOST: 172.%  # Allow docker containers to connect to mysql
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:4.0.0
+    image: confluentinc/cp-schema-registry
     ports:
       - "8082:8082"
     depends_on:
