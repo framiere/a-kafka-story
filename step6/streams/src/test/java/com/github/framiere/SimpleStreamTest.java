@@ -44,9 +44,8 @@ public class SimpleStreamTest {
         String inputTopic = "inputTopic";
         String outputTopic = "outputTopic";
 
-        System.out.println("Step 1: Create topology");
-        KafkaStreams kafkaStreams = buildTopology(inputTopic, outputTopic, streamConfig(bootstrapServers));
-
+            System.out.println("Step 1: Create topology");
+            KafkaStreams kafkaStreams = buildTopology(inputTopic, outputTopic, streamConfig(bootstrapServers));
         System.out.println("Step 2: Start topology");
         kafkaStreams.start();
 
