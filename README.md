@@ -1,3 +1,5 @@
+Make docker and mvn do their things first: run `./fetch.sh`
+
 1. [One zookeeper, one kafka broker](step1/)
 1. [One zookeeper, many kafka brokers](step2/)
 1. [Java consumer, java producer](step3/)
@@ -17,3 +19,5 @@
 1. [Change Data Capture, JSON, Ksql and join](step17/)
 1. [Random producer and Complex joins](step18/)
 1. [Sync random producer and mysql, capture CDC diff and push it to telegraf](step19/)
+
+Don't like Docker ? Please download Confluent platform here: https://www.confluent.io/download/
