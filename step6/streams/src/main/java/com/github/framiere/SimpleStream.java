@@ -6,6 +6,7 @@ import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.*;
 import org.apache.kafka.streams.processor.*;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -45,17 +46,17 @@ public class SimpleStream {
         // grab the first word as a key, and make a global count out of it, and push the changes to telegraf-global-count
         input
                 .map((key, value) -> new KeyValue<>(value.split("[, ]")[0], 0L))
-                .groupByKey(Serialized.with(Serdes.String(), Serdes.Long()))
+                .groupByKey(Grouped.with(Serdes.String(), Serdes.Long()))
                 .count()
                 .toStream()
                 .to("telegraf-global-count", Produced.with(Serdes.String(), Serdes.Long()));
 
-        // count the first word on a sliding window, and push the changes to telegraf-10s-window-count
         // check with ./kafka-console-consumer --bootstrap-server localhost:9092 --topic telegraf-10s-window-count --property print.key=true --value-deserializer org.apache.kafka.common.serialization.LongDeserializer
+        // count the first word on a sliding window, and push the changes to telegraf-10s-window-count
         input
                 .map((key, value) -> new KeyValue<>(value.split("[, ]")[0], 1L))
-                .groupByKey(Serialized.with(Serdes.String(), Serdes.Long()))
-                .windowedBy(TimeWindows.of(TimeUnit.SECONDS.toMillis(10)))
+                .groupByKey(Grouped.with(Serdes.String(), Serdes.Long()))
+                .windowedBy(TimeWindows.of(Duration.ofSeconds(10)))
                 .count()
                 .toStream((windowedRegion, count) -> windowedRegion.toString())
                 .to("telegraf-10s-window-count", Produced.with(Serdes.String(), Serdes.Long()));
