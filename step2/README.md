@@ -48,12 +48,12 @@ services:
 
 You can discover the configuration options at
 
-* https://docs.confluent.io/current/installation/docker/docs/configuration.html#zookeeper
-* https://docs.confluent.io/current/installation/docker/docs/configuration.html#confluent-kafka-cp-kafka
+* https://docs.confluent.io/current/installation/docker/config-reference.html#zk-configuration
+* https://docs.confluent.io/current/installation/docker/config-reference.html#confluent-kafka-configuration
 
 Note: Please note `KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR` is not defined anymore, we have now enough kafka brokers to satisfy the defaut replication factor of 3.
 
-then run it 
+then run it
 
 ```sh
 $ docker-compose up -d
