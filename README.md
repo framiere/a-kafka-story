@@ -1,4 +1,4 @@
-Make docker and maven do their things once for all by running `./fetch.sh`
+Make docker and maven do their thing once for all by running `./fetch.sh`
 
 1. [One zookeeper, one kafka broker](step1/)
 1. [One zookeeper, many kafka brokers](step2/)
