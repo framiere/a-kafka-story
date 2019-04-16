@@ -115,6 +115,7 @@ services:
 
   streams:
     build: ../step6/streams
+    restart: unless-stopped
     environment:
       JAVA_OPTS: "-javaagent:/opt/jolokia/jolokia.jar=host=0.0.0.0"
     volumes:
@@ -198,7 +199,7 @@ services:
   kibana_index_pattern:
     image: tutum/curl
     command: |
-      bash -c "sleep 30 ; curl 'http://kibana:5601/es_admin/.kibana/index-pattern/logstash-*/_create' -H 'kbn-version: 5.5.2' -H 'content-type: application/json' --data-binary '{\"title\":\"logstash-*\",\"timeFieldName\":\"@timestamp\",\"notExpandable\":true}'"
+      bash -c "sleep 30 ; curl -XPOST 'http://kibana:5601/api/saved_objects/index-pattern/logstash-*' -H 'kbn-version: 6.1.3' -H 'content-type: application/json' --data-binary '{\"attributes\":{\"title\":\"logstash-*\",\"timeFieldName\":\"@timestamp\"}}'"
     depends_on:
       - kibana
 
