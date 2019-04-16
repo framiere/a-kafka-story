@@ -37,7 +37,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:9092
 
   telegraf:
-    image: telegraf:1.5
+    image: telegraf:1.8
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock

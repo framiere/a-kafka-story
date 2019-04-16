@@ -100,7 +100,7 @@ And change the default telegraf command to `telegraf --config-directory /tmp/tel
 
 ```yml
   telegraf:
-    image: telegraf:1.5
+    image: telegraf:1.8
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock

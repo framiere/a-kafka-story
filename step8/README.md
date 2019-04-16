@@ -11,7 +11,7 @@ Let's do that with
 
 ```yml
   kafka-to-influxdb:
-    image: telegraf:1.5
+    image: telegraf:1.8
     restart: unless-stopped
     volumes:
       - ./telegraf-kafka-to-influxdb.conf:/etc/telegraf/telegraf.conf:ro

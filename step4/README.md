@@ -8,7 +8,7 @@ In this example, we'll add [telegraf](https://github.com/influxdata/telegraf/) t
 
 ```yml
   telegraf:
-    image: telegraf:1.5
+    image: telegraf:1.8
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock

@@ -49,7 +49,7 @@ services:
       - zookeeper
 
   telegraf:
-    image: telegraf:1.5
+    image: telegraf:1.8
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
