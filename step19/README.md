@@ -28,7 +28,7 @@ $ docker-compose exec connect curl -s -XPOST -H "Content-Type: application/json;
 
 # Enable Push to S3!
 
-```sh 
+```sh
 $ docker-compose exec connect curl  -XPOST -H "Content-Type: application/json; charset=UTF-8" http://localhost:8083/connectors/ -d '
 {
     "name": "s3-sink",
@@ -86,7 +86,7 @@ What a nice bus!
 # Ksql
 
 ```
-$ docker-compose exec ksql-cli ksql http://ksql-server:8088
+$ docker-compose exec ksql ksql
 ```
 
 ```sql
@@ -112,4 +112,3 @@ GROUP BY clazz;
 [Confluent Control Center](http://localhost:9021/)
 
 [Grafana](http://admin:admin@localhost:3000/)
-
