@@ -28,12 +28,12 @@ services:
 
 You can discover the configuration options at
 
-* https://docs.confluent.io/current/installation/docker/docs/configuration.html#zookeeper
-* https://docs.confluent.io/current/installation/docker/docs/configuration.html#confluent-kafka-cp-kafka
+* https://docs.confluent.io/current/installation/docker/config-reference.html#zk-configuration
+* https://docs.confluent.io/current/installation/docker/config-reference.html#confluent-kafka-configuration
 
 Note: `KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR` is set to 1 as we have a single broker (the default is 3)
 
-then run it 
+then run it
 
 ```sh
 $ docker-compose up -d
@@ -51,13 +51,13 @@ Fine, looks like `zookeeper` and `kafka` are up.
 
 Let's see how `confluentinc/cp-kafka` is built
 
-You can see at the end of [Dockerfile](https://github.com/confluentinc/cp-docker-images/blob/4.0.x/debian/kafka/Dockerfile) that the container runs `/etc/confluent/docker/run`
+You can see at the end of [Dockerfile](https://github.com/confluentinc/cp-docker-images/blob/5.2.x/debian/kafka/Dockerfile) that the container runs `/etc/confluent/docker/run`
 
 ```dockerfile
 CMD ["/etc/confluent/docker/run"]
 ```
 
-Let's look into the [`/etc/confluent/docker/run`](https://github.com/confluentinc/cp-docker-images/blob/4.0.x/debian/kafka/include/etc/confluent/docker/run) script 
+Let's look into the [`/etc/confluent/docker/run`](https://github.com/confluentinc/cp-docker-images/blob/5.2.x/debian/kafka/include/etc/confluent/docker/run) script
 
 ```sh
 echo "===> ENV Variables ..."
@@ -100,9 +100,9 @@ These `dub` and `cub` commands seem very interesting, can they do more ?
 
 # `confluentinc/cp-base` image
 
-These command are installed in the `confluentinc/cp-base` image 
+These command are installed in the `confluentinc/cp-base` image
 
-https://github.com/confluentinc/cp-docker-images/blob/4.0.x/debian/base/Dockerfile#L79
+https://github.com/confluentinc/cp-docker-images/blob/5.2.x/debian/base/Dockerfile#L82
 
 ```
 pip install --no-cache-dir git+https://github.com/confluentinc/confluent-docker-utils@v0.0.20
@@ -124,7 +124,7 @@ These commands log any output to stderr and returns with exitcode=0 if successfu
 Checkout the [confluent doc](https://docs.confluent.io/current/installation/docker/docs/development.html#docker-utility-belt-dub).
 
 
-## `cub` : Confluent utility belt 
+## `cub` : Confluent utility belt
 https://github.com/confluentinc/confluent-docker-utils/blob/v0.0.20/confluent/docker_utils/cub.py
 
 1. kafka-ready : Ensures a Kafka cluster is ready to accept client requests.
@@ -136,7 +136,7 @@ https://github.com/confluentinc/confluent-docker-utils/blob/v0.0.20/confluent/do
 
 Checkout the [confluent doc](https://docs.confluent.io/current/installation/docker/docs/development.html#confluent-platform-utility-belt-cub).
 
-# Java 
+# Java
 
 ```
 $ docker-compose exec kafka java -version
@@ -145,7 +145,7 @@ OpenJDK Runtime Environment (Zulu 8.17.0.3-linux64) (build 1.8.0_102-b14)
 OpenJDK 64-Bit Server VM (Zulu 8.17.0.3-linux64) (build 25.102-b14, mixed mode)
 ```
 
-See the [OpenJDK Zulu](https://www.azul.com/downloads/zulu/) based installation in [`confluentinc/cp-base`](https://github.com/confluentinc/cp-docker-images/blob/4.0.x/debian/base/Dockerfile#L81)
+See the [OpenJDK Zulu](https://www.azul.com/downloads/zulu/) based installation in [`confluentinc/cp-base`](https://github.com/confluentinc/cp-docker-images/blob/4.0.x/debian/base/Dockerfile#L84)
 
 # Let's see if everything is working
 
