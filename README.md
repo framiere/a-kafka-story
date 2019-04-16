@@ -21,3 +21,10 @@ Make docker and maven do their thing once for all by running `./fetch.sh`
 1. [Sync random producer and mysql, capture CDC diff and push it to telegraf](step19/)
 
 Don't like Docker ? Please download Confluent platform here: https://www.confluent.io/download/
+
+Also, please take a look at 
+1. https://github.com/confluentinc/cp-demo
+1. https://github.com/confluentinc/demo-scene
+1. https://github.com/confluentinc/examples
+1. https://github.com/confluentinc/kafka-streams-examples
+1. https://www.confluent.io/stream-processing-cookbook/
