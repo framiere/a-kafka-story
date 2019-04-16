@@ -5,6 +5,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -19,7 +20,7 @@ public class SimpleConsumer {
         System.out.println("Subscribing to `sample` topic");
         consumer.subscribe(Arrays.asList("sample"));
         while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(100);
+            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(400));
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("Received offset = " + record.offset() + ", key = " + record.key() + ", value = " + record.value());
             }
