@@ -1,8 +1,8 @@
-# Objective 
+# Objective
 
-Ksql using the standalone version 
+Ksql using the standalone version
 
-Let's create simple data 
+Let's create simple data
 
 ```
 echo '{"name":"simpson","firstname":"lisa","age":8}
@@ -14,7 +14,7 @@ echo '{"name":"simpson","firstname":"lisa","age":8}
     | docker exec -i $(docker-compose ps -q kafka-1) kafka-console-producer --broker-list kafka-1:9092 --topic heroes
 ```
 
-Let's our topics 
+Let's our topics
 
 ```
 $ docker-compose exec kafka-1 kafka-topics --zookeeper zookeeper:2181 --list
@@ -42,7 +42,7 @@ ksql> SELECT * FROM heroes;
 ```
 
 There's nothing because no new data is flowing to the system, just kill it with Ctrl-C.
-And update `auto.offset.reset` 
+And update `auto.offset.reset`
 
 ```
 ksql> SET 'auto.offset.reset' = 'earliest';
@@ -58,7 +58,7 @@ ksql> SELECT * FROM heroes;
 ksql> exit
 ```
 
-Let's our topics again 
+Let's our topics again
 
 ```
 $ docker-compose exec kafka-1 kafka-topics --zookeeper zookeeper:2181 --list
@@ -105,7 +105,7 @@ ksql> SELECT * FROM simpsons;
 ^CQuery terminated
 ```
 
-Let's add some random heroes 
+Let's add some random heroes
 
 ```
 ksql> CREATE STREAM random_heroes \
@@ -123,7 +123,7 @@ ksql> SELECT * FROM random_heroes;
 While this stream is running, let's create random heroes
 
 ```sh
-$ while [ true ] ; do
+$ for i in {1..20} ; do
 echo '{"name":"random-'$(( RANDOM % 5 ))'","firstname":"random","age":'$(( RANDOM % 80 ))'}' \
     | docker exec -i $(docker-compose ps -q kafka-1) kafka-console-producer --broker-list kafka-1:9092 --topic heroes
 done
@@ -144,7 +144,7 @@ ksql__commands
 
 2 new topics that represent our created topics.
 
-We can also see 
+We can also see
 
 Let's do now some more non trivial computation now:
 
@@ -194,7 +194,7 @@ ksql> CREATE TABLE heroes_ages AS \
 ```
 
 This computation is now ready to be consumed in the `heroes_ages` topic
- 
+
 ```sh
 $ docker-compose exec kafka-1 kafka-topics --zookeeper zookeeper:2181 --list
 HEROES_AGES
