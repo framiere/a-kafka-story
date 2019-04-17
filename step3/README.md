@@ -107,6 +107,3 @@ consumer_1   | Received offset = 370732, key = key 4, value = Value 4
 consumer_1   | Received offset = 370733, key = key 5, value = Value 5
 ```
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/lvQz6XFnSHDzoPS2E9wcTiREN.png)](https://asciinema.org/a/lvQz6XFnSHDzoPS2E9wcTiREN?autoplay=1)

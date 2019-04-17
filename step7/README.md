@@ -50,10 +50,6 @@ java -jar jolokia-jvm-1.3.7-agent.jar stop `jps | grep SupportedKafka | cut -d '
 confluent-4.0.0/bin/confluent stop
 ```
 
-Here's the live version
-	
-[![screencast](https://asciinema.org/a/IBp8TA07QaWOm5q0cp2mA0c2L.png)](https://asciinema.org/a/IBp8TA07QaWOm5q0cp2mA0c2L?autoplay=1)
-
 # Telegraf
 
 Well now we can add the [jolokia2 plugin](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/jolokia2) and setup the metrics we want to gather using jolokia.
@@ -204,8 +200,4 @@ We can now reference the `jolokia` volume!
 
 We're done
 
-
-# The full action ?
-
-[![screencast](https://asciinema.org/a/e6jEBnNWXQAOfvFwSOLBW0K5V.png)](https://asciinema.org/a/e6jEBnNWXQAOfvFwSOLBW0K5V?autoplay=1)
 

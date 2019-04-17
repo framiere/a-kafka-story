@@ -115,7 +115,4 @@ $ docker-compose exec kafka-1 kafka-configs \
 Completed Updating config for entity: topic 'dbserver1.mydb.team'.    
 ```
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/oOzstwpeKset9fHZYIj3SHXHn.png)](https://asciinema.org/a/oOzstwpeKset9fHZYIj3SHXHn?autoplay=1)
 

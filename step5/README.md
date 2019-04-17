@@ -54,6 +54,3 @@ Topic:telegraf	PartitionCount:10	ReplicationFactor:3	Configs:
 
 All good!
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/RLEDOaMNKJs0SoUPuo5GPHab9.png)](https://asciinema.org/a/RLEDOaMNKJs0SoUPuo5GPHab9?autoplay=1)

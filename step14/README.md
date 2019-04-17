@@ -295,6 +295,3 @@ one | 2
 two | 1
 ```
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/74rGpmh3SfCjYbi4InpEswA0z.png)](https://asciinema.org/a/74rGpmh3SfCjYbi4InpEswA0z?autoplay=1)

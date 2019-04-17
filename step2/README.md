@@ -103,6 +103,3 @@ Topic:sample	PartitionCount:1	ReplicationFactor:1	Configs:
 	Topic: sample	Partition: 0	Leader: 1	Replicas: 1	Isr: 1
 ```    
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/2ds7ijbkVDBd7Jdshof5Btd4U.png)](https://asciinema.org/a/2ds7ijbkVDBd7Jdshof5Btd4U?autoplay=1)

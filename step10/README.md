@@ -187,6 +187,3 @@ See https://docs.confluent.io/current/connect/connect-jdbc/docs/source_config_op
 
 Enter Change data capture.
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/VpcebHg5COpfknwxyOi3zvP1u.png)](https://asciinema.org/a/VpcebHg5COpfknwxyOi3zvP1u?autoplay=1)

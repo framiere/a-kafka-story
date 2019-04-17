@@ -158,6 +158,3 @@ In minio :
 
 Perfect!
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/q0XtZntXV58NknefCNggOYRCz.png)](https://asciinema.org/a/q0XtZntXV58NknefCNggOYRCz?autoplay=1)

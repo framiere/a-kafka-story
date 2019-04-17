@@ -201,7 +201,4 @@ dbserver1.mydb.team
 schema-changes.mydb
 ```
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/cKabJiM4U4cP5kH2jxNaDjD02.png)](https://asciinema.org/a/cKabJiM4U4cP5kH2jxNaDjD02?autoplay=1)
 

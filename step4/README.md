@@ -83,6 +83,3 @@ Please take the time to understand why it's not as simple as addition partition.
 
 Do not forget to read the [scaling-the-cluster](https://docs.confluent.io/current/kafka/post-deployment.html#scaling-the-cluster) chapter.
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/WY9PphR9uHspuaStk8mLFhaZC.png)](https://asciinema.org/a/WY9PphR9uHspuaStk8mLFhaZC?autoplay=1)

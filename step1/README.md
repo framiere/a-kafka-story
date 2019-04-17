@@ -206,6 +206,3 @@ step1_kafka_1      /etc/confluent/docker/run   Exit 143
 step1_zookeeper_1   /etc/confluent/docker/run   Exit 143
 ```
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/gZsALOy3FH2JEYnQJZfnL0p2N.png)](https://asciinema.org/a/gZsALOy3FH2JEYnQJZfnL0p2N?autoplay=1)

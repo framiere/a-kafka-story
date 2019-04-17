@@ -23,6 +23,3 @@ $ docker-compose exec kafka-1 kafka-console-consumer \
     --from-beginning
 ```
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/jfXXzDMSrGNplXj3MLdPOGEAt.png)](https://asciinema.org/a/jfXXzDMSrGNplXj3MLdPOGEAt?autoplay=1)

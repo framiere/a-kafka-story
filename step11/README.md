@@ -471,6 +471,3 @@ The deletion payload has the following form
 }
 ```
 
-# The full action ?
-
-[![screencast](https://asciinema.org/a/lUa5RhZUeJOsPB4XSbM0VnVy3.png)](https://asciinema.org/a/lUa5RhZUeJOsPB4XSbM0VnVy3?autoplay=1)
