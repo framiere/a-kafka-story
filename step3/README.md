@@ -31,7 +31,7 @@ in `step3/consumer` you'll see a `Dockerfile` using a [multi stage build](https:
 
 The first step is the following
 ```Dockerfile
-FROM maven:3.5-jdk-8 as mavenBuild
+FROM maven:3.6.1-jdk-8 as mavenBuild
 COPY pom.xml pom.xml
 COPY src src
 RUN ["mvn"]
