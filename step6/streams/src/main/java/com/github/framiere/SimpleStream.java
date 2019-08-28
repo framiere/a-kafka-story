@@ -13,8 +13,8 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
- * ./confluent destroy
- * ./confluent start
+ * ./confluent local destroy
+ * ./confluent local start
  * ./kafka-topics --zookeeper localhost:2181 --create --topic telegraf --partitions 3 --replication-factor 1
  * run application java -jar simplestream*.jar
  * seq 10000 | ./kafka-console-producer --broker-list localhost:9092 --topic telegraf

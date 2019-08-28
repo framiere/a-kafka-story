@@ -36,18 +36,18 @@ This commands will
 1. disconnect the jolokia agent from the running Kafka process
 1. stop Kafka and Zookeeper
 
-
 ```
-wget http://packages.confluent.io/archive/4.0/confluent-4.0.0-2.11.tar.gz
+wget http://packages.confluent.io/archive/5.3/confluent-5.3.0-2.12.tar.gz
 wget https://repo1.maven.org/maven2/org/jolokia/jolokia-jvm/1.3.7/jolokia-jvm-1.3.7-agent.jar
-tar -xf confluent-4.0.0-2.11.tar.gz
-confluent-4.0.0/bin/confluent start kafka
+tar -xf confluent-5.3.0-2.12.tar.gz
+curl -L https://cnfl.io/cli | sh -s -- -b confluent-5.3.0/bin
+confluent-5.3.0/bin/confluent local start kafka
 jps
 java -jar jolokia-jvm-1.3.7-agent.jar --help | head -13
 java -jar jolokia-jvm-1.3.7-agent.jar start `jps | grep SupportedKafka | cut -d ' ' -f 1`
 curl http://127.0.0.1:8778/jolokia/ 
 java -jar jolokia-jvm-1.3.7-agent.jar stop `jps | grep SupportedKafka | cut -d ' ' -f 1`
-confluent-4.0.0/bin/confluent stop
+confluent-5.3.0/bin/confluent local stop
 ```
 
 # Telegraf
