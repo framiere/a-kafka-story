@@ -13,6 +13,8 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper
     hostname: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
 
   kafka:
     image: confluentinc/cp-kafka
