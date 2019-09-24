@@ -11,11 +11,11 @@ Let's start with a simple `docker-compose.yml` file
 version: '2'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper
+    image: confluentinc/cp-zookeeper:5.3.1
     hostname: zookeeper
 
   kafka:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka
     depends_on:
       - zookeeper

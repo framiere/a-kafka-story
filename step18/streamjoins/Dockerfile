@@ -3,7 +3,7 @@ COPY pom.xml pom.xml
 COPY src src
 RUN ["mvn", "install"]
 
-FROM confluentinc/cp-base
+FROM confluentinc/cp-base:5.3.1
 COPY --from=mavenBuild ./target/*.jar ./
 ENV ACTION "producer"
 ENV BROKER_LIST "kafka-1:9092,kafka-2:9092,kafka-3:9092"

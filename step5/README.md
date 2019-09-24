@@ -10,7 +10,7 @@ Let's add `KAFKA_DEFAULT_REPLICATION_FACTOR: 3` configuration to all kafka broke
 
 ```yml
   kafka-1:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-1
     depends_on:
       - zookeeper
@@ -26,7 +26,7 @@ We also create the `telegraf` topic with the right number of partitions from the
 
 ```yml
   telegraf-topic:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     command: bash -c "cub kafka-ready -z zookeeper:2181 1 30 && kafka-topics --zookeeper zookeeper:2181 --create --topic telegraf --partitions 10 --replication-factor 3"
     depends_on:
       - zookeeper
