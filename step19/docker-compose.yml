@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper
+    image: confluentinc/cp-zookeeper:5.3.1
     hostname: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -10,7 +10,7 @@ services:
       start_period: 30s
 
   kafka-1:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-1
     depends_on:
       - zookeeper
@@ -24,7 +24,7 @@ services:
       start_period: 30s
 
   kafka-2:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-2
     depends_on:
       - zookeeper
@@ -38,7 +38,7 @@ services:
       start_period: 30s
 
   kafka-3:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-3
     depends_on:
       - zookeeper
@@ -101,7 +101,7 @@ services:
       "
 
   connect:
-    image: confluentinc/cp-kafka-connect
+    image: confluentinc/cp-kafka-connect:5.3.1
     hostname: connect
     restart: always
     ports:
@@ -183,7 +183,7 @@ services:
       - grafana
 
   telegraf-topic:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     command: bash -c "cub kafka-ready -z zookeeper:2181 3 120 && kafka-topics --zookeeper zookeeper:2181 --create --topic telegraf --partitions 10 --replication-factor 3"
     depends_on:
       - zookeeper
@@ -214,7 +214,7 @@ services:
       - influxdb
 
   ksql:
-    image: confluentinc/cp-ksql-server
+    image: confluentinc/cp-ksql-server:5.3.1
     hostname: ksql-cli
     depends_on:
       - kafka-1
@@ -227,7 +227,7 @@ services:
       KSQL_LISTENERS: http://0.0.0.0:8088
 
   control-center:
-    image: confluentinc/cp-enterprise-control-center
+    image: confluentinc/cp-enterprise-control-center:5.3.1
     container_name: control-center
     restart: always
     depends_on:

@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper
+    image: confluentinc/cp-zookeeper:5.3.1
     hostname: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -10,7 +10,7 @@ services:
       start_period: 30s
 
   kafka-1:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-1
     depends_on:
       - zookeeper
@@ -24,7 +24,7 @@ services:
       start_period: 30s
 
   kafka-2:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-2
     depends_on:
       - zookeeper
@@ -38,7 +38,7 @@ services:
       start_period: 30s
 
   kafka-3:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-3
     depends_on:
       - zookeeper
@@ -64,7 +64,7 @@ services:
       MYSQL_ROOT_HOST: 172.%  # Allow docker containers to connect to mysql
 
   connect:
-    image: confluentinc/cp-kafka-connect
+    image: confluentinc/cp-kafka-connect:5.3.1
     hostname: connect
     restart: always
     ports:
@@ -97,7 +97,7 @@ services:
       start_period: 30s
 
   ksql:
-    image: confluentinc/cp-ksql-server:5.2.1
+    image: confluentinc/cp-ksql-server:5.3.1
     hostname: ksql-cli
     depends_on:
       - kafka-1

@@ -10,13 +10,13 @@ In this example, we'll focus on kafka, no need to setup many zookeeper, it would
 version: '2'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper
+    image: confluentinc/cp-zookeeper:5.3.1
     hostname: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
 
   kafka-1:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-1
     depends_on:
       - zookeeper
@@ -26,7 +26,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092
 
   kafka-2:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-2
     depends_on:
       - zookeeper
@@ -36,7 +36,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9092
 
   kafka-3:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-3
     depends_on:
       - zookeeper

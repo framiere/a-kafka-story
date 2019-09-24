@@ -1,13 +1,13 @@
 version: '2'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper
+    image: confluentinc/cp-zookeeper:5.3.1
     hostname: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
 
   kafka-1:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-1
     depends_on:
       - zookeeper
@@ -19,7 +19,7 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
 
   kafka-2:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-2
     depends_on:
       - zookeeper
@@ -31,7 +31,7 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
       
   kafka-3:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     hostname: kafka-3
     depends_on:
       - zookeeper
@@ -43,7 +43,7 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'false'
 
   telegraf-topic:
-    image: confluentinc/cp-kafka
+    image: confluentinc/cp-kafka:5.3.1
     command: bash -c "cub kafka-ready -z zookeeper:2181 1 30 && kafka-topics --zookeeper zookeeper:2181 --create --topic telegraf --partitions 10 --replication-factor 3"
     depends_on:
       - zookeeper
