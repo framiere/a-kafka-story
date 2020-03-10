@@ -3,7 +3,8 @@ Please checkout these awesome references
 1. https://kafka-tutorials.confluent.io/
 
 And if you want to learn another way, just follow these steps.
-... Make docker and maven do their thing once for all by running `./fetch.sh`
+
+Make docker and maven do their thing once for all by running `./fetch.sh`
 
 Then jump in the Kafka Story!
 
